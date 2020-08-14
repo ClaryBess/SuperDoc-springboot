@@ -16,6 +16,7 @@ public class Document {
     private Integer IsRecycle;
     private Integer CommentNumber;
     private Integer CollectNumber;
+    private Integer Editable;
 
     public Integer getDocID() {
         return DocID;
@@ -113,6 +114,14 @@ public class Document {
         CollectNumber = collectNumber;
     }
 
+    public Integer getEditable() {
+        return Editable;
+    }
+
+    public void setEditable(Integer editable) {
+        Editable = editable;
+    }
+
     @Override
     public String toString() {
         return "Document{" +
@@ -128,7 +137,7 @@ public class Document {
                 ", IsRecycle=" + IsRecycle +
                 ", CommentNumber=" + CommentNumber +
                 ", CollectNumber=" + CollectNumber +
+                ", Editable=" + Editable +
                 '}';
     }
-
 }
