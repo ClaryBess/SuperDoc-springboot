@@ -3,17 +3,17 @@ package com.example.test.bean;
 import java.util.Date;
 
 public class Team {
-    private int TeamID;
+    private Integer TeamID;
     private String TeamName;
-    private int MemberNumber;
-    private int Privilege;
+    private Integer MemberNumber;
+    private Integer Privilege;
     private Date DateTime;
 
     public int getTeamID() {
         return TeamID;
     }
 
-    public void setTeamID(int teamID) {
+    public void setTeamID(Integer teamID) {
         TeamID = teamID;
     }
 
@@ -29,7 +29,7 @@ public class Team {
         return MemberNumber;
     }
 
-    public void setMemberNumber(int memberNumber) {
+    public void setMemberNumber(Integer memberNumber) {
         MemberNumber = memberNumber;
     }
 
@@ -37,7 +37,7 @@ public class Team {
         return Privilege;
     }
 
-    public void setPrivilege(int privilege) {
+    public void setPrivilege(Integer privilege) {
         Privilege = privilege;
     }
 
