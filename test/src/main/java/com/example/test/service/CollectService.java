@@ -13,13 +13,17 @@ public class CollectService {
     @Autowired
     CollectMapper collectMapper;
 
-    public Collect insertCollect(Collect collect){
-        Collect collect1 = collectMapper.getCollectByDocAndUser(collect);
+    public Collect insertCollect(Integer DocID,Integer UserID){
+        Collect collect1 = collectMapper.getCollectByDocAndUser(DocID,UserID);
         if(collect1 != null){
             return collect1;
         }
-        collectMapper.insertCollect(collect);
-        return collectMapper.getCollectById(collect.getCollectID());
+        collectMapper.insertCollect(DocID,UserID);
+        return collectMapper.getCollectByDocAndUser(DocID,UserID);
+    }
+
+    public int deleteByDocAndUser(Integer DocID,Integer UserID){
+        return collectMapper.deleteByDocAndUser(DocID, UserID);
     }
 
     public int deleteById(Integer CollectID){
@@ -40,6 +44,10 @@ public class CollectService {
 
     public Collect getCollectById(Integer CollectID){
         return collectMapper.getCollectById(CollectID);
+    }
+
+    public Collect getCollectByDocAndUser(Integer DocID,Integer UserID){
+        return collectMapper.getCollectByDocAndUser(DocID,UserID);
     }
 
 }

@@ -59,4 +59,10 @@ public class BrowseController {
         browseService.deleteBrowseByUser(UserID);
         return new CommonResult(200,null,null);
     }
+
+    @PostMapping("/browse/deleteBrowse")
+    public CommonResult deleteBrowse(@RequestBody Integer DocID,@RequestBody Integer UserID){
+        browseService.deleteBrowseByDocAndUser(DocID,UserID);
+        return new CommonResult(200,null,null);
+    }
 }

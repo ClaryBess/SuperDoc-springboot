@@ -27,6 +27,9 @@ public interface BrowseMapper {
     @Delete("delete from Browse where UserID=#{UserID}")
     public int deleteBrowseByUser(Integer UserID);
 
+    @Delete("delete from Browse where DocID=#{DocID} and UserID=#{UserID}")
+    public int deleteBrowseByDocAndUser(Integer DocID,Integer UserID);
+
     @Update("update Browse set DateTime=now() where BrowseID=#{BrowseID}")
     public int updateDateTime(Integer BrowseID);
 
