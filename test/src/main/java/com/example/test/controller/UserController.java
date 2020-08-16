@@ -46,6 +46,7 @@ public class UserController {
         if (user.getProfileUrl()==null){
             user.setProfileUrl("");
         }
+        System.out.println("R1:User="+user.toString());
         //System.out.println("UserName="+user.getUserName());
         User user1=userMapper.getUserByEmail(user.getEmail());
         if(user1!=null){
@@ -63,6 +64,7 @@ public class UserController {
     public CommonResult login(@RequestBody User user){
         User user1=userMapper.getUserByName(user.getUserName());
         //需要先判断user1 是否为null
+        System.out.println("L:User="+user.toString());
         System.out.println("UserName="+user.getUserName());
         System.out.println("Password="+user.getPassword());
         System.out.println("Password2="+user1.getPassword());
@@ -76,6 +78,7 @@ public class UserController {
 
     @RequestMapping(value="user/register2")
     public CommonResult register2(@RequestBody User user){
+        System.out.println("R2:User="+user.toString());
         userMapper.updateBir(user);
         userMapper.updateGen(user);
         userMapper.updatePro(user);
