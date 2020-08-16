@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User Regis(User user){
+    public User Register(User user){
         User user1 = userMapper.getUserByName(user.getUserName());
         User user2 = userMapper.getUserByEmail(user.getEmail());
         if(user1==null && user2==null){

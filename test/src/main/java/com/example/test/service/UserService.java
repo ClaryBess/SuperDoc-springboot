@@ -5,7 +5,7 @@ import com.example.test.bean.User;
 public interface UserService {
 
     //注册
-    User Regis(User user);
+    User Register(User user);
 
     //登录校验信息
     User loginIn(String name, String password);

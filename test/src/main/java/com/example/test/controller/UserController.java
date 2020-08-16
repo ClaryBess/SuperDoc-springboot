@@ -3,6 +3,8 @@ package com.example.test.controller;
 import com.example.test.bean.CommonResult;
 import com.example.test.bean.User;
 import com.example.test.mapper.UserMapper;
+import com.example.test.service.DocService;
+import com.example.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +26,8 @@ public class UserController {
     String UPLOADFILE_PATH;
     @Autowired
     UserMapper userMapper;
-    @GetMapping("/user/{UserID}")
-    public User getUserById(@PathVariable("UserID") Integer UserID){
-        return userMapper.getUserById(UserID);
-    }
-
-    @GetMapping("/user")
-    public User insertUser(User user){
-        userMapper.insertUser(user);
-        return user;
-    }
+    @Autowired
+    UserService userService;
 
     @PostMapping("/user/regisiter")
     public CommonResult register(@RequestBody User user){
@@ -46,29 +40,29 @@ public class UserController {
         if (user.getProfileUrl()==null){
             user.setProfileUrl("");
         }
-        System.out.println("R1:User="+user.toString());
         //System.out.println("UserName="+user.getUserName());
-        User user1=userMapper.getUserByEmail(user.getEmail());
+        User user1=userService.getUserByEmail(user.getEmail());
         if(user1!=null){
             return new CommonResult(500,"email already exists!",null);
         }
-        User user2=userMapper.getUserByName(user.getUserName());
+        User user2=userService.getUserByName(user.getUserName());
         if(user2!=null){
             return new CommonResult(400,"username already exists!",null);
         }
-        User result =insertUser(user);
+        User result =userService.Register(user);
+        System.out.println("R1:User="+user.toString());
         return new CommonResult(200,null,result);
     }
 
     @RequestMapping(value="/user/login",method = RequestMethod.POST)
     public CommonResult login(@RequestBody User user){
-        User user1=userMapper.getUserByName(user.getUserName());
+        User user1=userService.loginIn(user.getUserName(),user.getPassword());
         //需要先判断user1 是否为null
         System.out.println("L:User="+user.toString());
         System.out.println("UserName="+user.getUserName());
         System.out.println("Password="+user.getPassword());
         System.out.println("Password2="+user1.getPassword());
-        if(user1!=null&&user.getPassword().equals(user1.getPassword())){
+        if(user1!=null){
             return new CommonResult(200,"success",user);
         }
         else {
@@ -79,9 +73,20 @@ public class UserController {
     @RequestMapping(value="user/register2")
     public CommonResult register2(@RequestBody User user){
         System.out.println("R2:User="+user.toString());
-        userMapper.updateBir(user);
-        userMapper.updateGen(user);
-        userMapper.updatePro(user);
+        userService.updateBir(user);
+        userService.updateGen(user);
+       // userMapper.updatePro(user);
+        user=userService.getUserById(user.getUserID());
+        return new CommonResult(200,null,user);
+    }
+
+    @RequestMapping(value="user/edit")
+    public CommonResult edit(@RequestBody User user){
+        userService.updateUserPwd(user);
+        userService.updateBir(user);
+        userService.updateGen(user);
+        // userMapper.updatePro(user);
+        user=userService.getUserById(user.getUserID());
         return new CommonResult(200,null,user);
     }
     /**
