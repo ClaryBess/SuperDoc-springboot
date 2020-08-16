@@ -1,12 +1,11 @@
 package com.example.test.controller;
 
+import com.example.test.bean.CommonResult;
 import com.example.test.bean.Document;
 import com.example.test.mapper.DocumentMapper;
 import com.example.test.service.DocService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
