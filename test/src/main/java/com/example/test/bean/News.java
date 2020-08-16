@@ -6,7 +6,16 @@ public class News {
     private Integer NewsID;
     private Date DateTime;
     private Integer Type;
+    private Integer IsRead;
     private String Content;
+
+    public Integer getIsRead() {
+        return IsRead;
+    }
+
+    public void setIsRead(Integer isRead) {
+        IsRead = isRead;
+    }
 
     public int getNewsID() {
         return NewsID;

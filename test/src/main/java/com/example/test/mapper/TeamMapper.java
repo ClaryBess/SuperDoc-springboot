@@ -16,27 +16,27 @@ public interface TeamMapper {
 
     //修改团队信息
     @Update("update Team set TeamName=#{TeamName} where TeamID=#{TeamID}")
-    int updateTeam(Team team);
+    void updateTeam(Team team);
 
     //添加团队成员
     @Insert("insert into Member(MemberID,Team ID)")
-    int insertMember(User user);
+    void insertMember(User user);
 
     //删除团队成员
     @Delete("delete from Member where UserID=#{UserID}")
-    int deleteMember(User user);
+    void deleteMember(User user);
 
     //修改团队权限
     @Update("update Team set Privilege=#{Privilege}")
-    int changePrivilege(Team team);
+    void changePrivilege(Team team);
 
     //解散团队
     @Delete("delete from Team where TeamID=#{TeamID}")
-    int disbandTeam(Team team);
+    void disbandTeam(Team team);
 
     //根据团队id选择团队
     @Select("select * from Team where TeamID=#{id}")
-    Team selectTeamById(String id);
+    Team selectTeamById(Integer id);
 
     //根据团队名称选择团队
     @Select("select * from Team where TeamName=#{name}")

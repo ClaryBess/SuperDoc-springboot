@@ -3,7 +3,7 @@ package com.example.test.bean;
 import java.util.Date;
 
 public class User {
-    private int UserID;
+    private Integer UserID;
     private String UserName;
     private String Password;
     private String Email;
@@ -15,7 +15,7 @@ public class User {
         return UserID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(Integer userID) {
         UserID = userID;
     }
 
@@ -65,18 +65,5 @@ public class User {
 
     public void setProfileUrl(String profileUrl) {
         ProfileUrl = profileUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "UserID=" + UserID +
-                ", UserName='" + UserName + '\'' +
-                ", Password='" + Password + '\'' +
-                ", Email='" + Email + '\'' +
-                ", Gender='" + Gender + '\'' +
-                ", Birthday=" + Birthday +
-                ", ProfileUrl='" + ProfileUrl + '\'' +
-                '}';
     }
 }

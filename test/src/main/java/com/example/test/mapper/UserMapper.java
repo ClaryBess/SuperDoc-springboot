@@ -2,7 +2,9 @@ package com.example.test.mapper;
 
 import com.example.test.bean.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
+@Component
 @Mapper
 public interface UserMapper {
 
@@ -14,6 +16,9 @@ public interface UserMapper {
 
     @Select("select * from User where Email=#{Email}")
     public User getUserByEmail(String Email);
+
+    @Select("select * from User where UserName=#{name},Password=#{password}")
+    User getInfo(String name, String password);
 
     @Delete("delete from User where UserID=#{UserID}")
     public int deleteUserById(Integer UserID);
