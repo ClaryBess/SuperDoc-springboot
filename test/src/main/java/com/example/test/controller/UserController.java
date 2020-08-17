@@ -138,4 +138,14 @@ public class UserController {
         }
     }
 
+    @PostMapping("/user/getName/{UserID}")
+    public String getName(@PathVariable Integer UserID){
+        return  userService.getUserById(UserID).getUserName();
+    }
+
+    @PostMapping("/user/getPro/{UserID}")
+    public String getPro(@PathVariable Integer UserID){
+        return  userService.getUserById(UserID).getProfileUrl();
+    }
+
 }

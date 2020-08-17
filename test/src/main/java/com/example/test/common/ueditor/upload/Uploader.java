@@ -1,8 +1,8 @@
-package com.cys.wtdp.common.ueditor.upload;
+package com.example.test.common.ueditor.upload;
 
 
 
-import com.cys.wtdp.common.ueditor.define.State;
+import com.example.test.common.ueditor.define.State;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

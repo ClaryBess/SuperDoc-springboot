@@ -1,4 +1,4 @@
-package com.cys.wtdp.common.ueditor.define;
+package com.example.test.common.ueditor.define;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public final class ActionMap {
 	public static final int CATCH_IMAGE = 5;
 	public static final int LIST_FILE = 6;
 	public static final int LIST_IMAGE = 7;
-	
+
 	static {
 		mapping = new HashMap<String, Integer>(){{
 			put( "config", ActionMap.CONFIG );
@@ -34,9 +34,9 @@ public final class ActionMap {
 			put( "listimage", ActionMap.LIST_IMAGE );
 		}};
 	}
-	
+
 	public static int getType ( String key ) {
 		return ActionMap.mapping.get( key );
 	}
-	
+
 }

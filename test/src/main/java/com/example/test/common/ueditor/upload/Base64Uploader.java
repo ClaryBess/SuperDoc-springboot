@@ -1,10 +1,10 @@
-package com.cys.wtdp.common.ueditor.upload;
+package com.example.test.common.ueditor.upload;
 
-import com.cys.wtdp.common.ueditor.PathFormat;
-import com.cys.wtdp.common.ueditor.define.AppInfo;
-import com.cys.wtdp.common.ueditor.define.BaseState;
-import com.cys.wtdp.common.ueditor.define.FileType;
-import com.cys.wtdp.common.ueditor.define.State;
+import com.example.test.common.ueditor.PathFormat;
+import com.example.test.common.ueditor.define.AppInfo;
+import com.example.test.common.ueditor.define.BaseState;
+import com.example.test.common.ueditor.define.FileType;
+import com.example.test.common.ueditor.define.State;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import java.util.Map;
 public final class Base64Uploader {
     static Logger logger = LoggerFactory.getLogger(Base64Uploader.class);
 	public static State save(String content, Map<String, Object> conf) {
-		
+
 		byte[] data = decode(content);
 
 		long maxSize = ((Long) conf.get("maxSize")).longValue();
@@ -52,5 +52,5 @@ public final class Base64Uploader {
 	private static boolean validSize(byte[] data, long length) {
 		return data.length <= length;
 	}
-	
+
 }

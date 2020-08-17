@@ -1,13 +1,12 @@
-package com.cys.wtdp.common.ueditor.upload;
+package com.example.test.common.ueditor.upload;
 
-import com.cys.wtdp.common.ueditor.define.AppInfo;
-import com.cys.wtdp.common.ueditor.define.BaseState;
-import com.cys.wtdp.common.ueditor.define.State;
-import com.cys.wtdp.modules.oss.cloud.OSSFactory;
+import com.example.test.common.ueditor.define.AppInfo;
+import com.example.test.common.ueditor.define.BaseState;
+import com.example.test.common.ueditor.define.State;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
+import org.springframework.util.ClassUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
@@ -15,7 +14,7 @@ import java.io.*;
 @ConfigurationProperties(prefix="nginx")
 public class StorageManager {
 	public static final int BUFFER_SIZE = 8192;
-	
+
 	private static String fileurl;
 
 	public static String getFileurl() {
@@ -85,11 +84,10 @@ public class StorageManager {
 			/**
 			 * 此处调用文件上传服务，并获取返回结果返回
 			 */
-//			UploadResult result = baseFileService.upload(dataBuf, picName, "OM", null);
+			// UploadResult result = baseFileService.upload(dataBuf, picName, "OM", null);
 
-
-			String url= OSSFactory.build().uploadSuffix(new ByteArrayInputStream(dataBuf), suffix);
-
+			String paths = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"config";
+			String url= "";//OSSFactory.build().uploadSuffix(new ByteArrayInputStream(dataBuf), suffix);
 
 			//String url = OSSFactory.build().uploadSuffix(dataBuf, suffix);
 
@@ -139,7 +137,7 @@ public class StorageManager {
 //			UploadUtils uploadUtils = new UploadUtils();
 //			boolean success = uploadUtils.uploadFile(in, path, picName);
 			boolean success = true;
-			
+
 			//如果上传成功
 			if (success) {
 				state = new BaseState(true);
@@ -179,7 +177,7 @@ public class StorageManager {
 		state = new BaseState(true);
 		state.putInfo( "size", targetFile.length() );
 		state.putInfo( "title", targetFile.getName() );
-		
+
 		return state;
 	}
 

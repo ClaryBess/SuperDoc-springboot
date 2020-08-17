@@ -17,10 +17,6 @@ public class DocController {
     @Autowired
     DocService docService;
 
-    @GetMapping("/doc/{DocID}")
-    public Document getDoc(@PathVariable("DocID") Integer DocID){
-        return documentMapper.getDocById(DocID);
-    }
 
     @GetMapping("/doc/user/{UserID}")
     public List<Document> getDocByUser(@PathVariable("UserID") Integer UserID){
@@ -72,5 +68,64 @@ public class DocController {
     public Document collect(@PathVariable("DocID") Integer DocID){
         documentMapper.collectDoc(DocID);
         return documentMapper.getDocById(DocID);
+    }
+
+    @RequestMapping(value = "/doc",method = RequestMethod.POST)
+    public CommonResult register(@RequestBody Document document){
+        System.out.println(document.getTitle());
+        System.out.println("user"+document.getUserID());
+        Integer result=docService.insertDoc(document).getDocID();
+        return new CommonResult(200,null,result);
+    }
+
+//    @PostMapping("/doc/edit")
+//    public CommonResult edit(@RequestBody Document document){
+//        Document result=docService.insertDoc(document);
+//        return new CommonResult(200,null,result);
+//    }
+
+    @PostMapping("/doc/get/{DocID}")
+    public Document getDoc(@PathVariable("DocID") Integer DocID){
+        return docService.getDocById(DocID);
+    }
+
+    @PostMapping("/doc/checkPriView/{DocID")
+    public boolean checkPriView(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
+        if(UserID==docService.getDocById(DocID).getUserID())
+            return true;
+        else if(docService.getDocById(DocID).getPrivilege()/1000==1)
+            return true;
+        else
+            return false;
+    }
+
+    @PostMapping("/doc/checkPriEdit/{DocID}")
+    public boolean checkPriEdit(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
+        if(UserID==docService.getDocById(DocID).getUserID())
+            return true;
+        else if(docService.getDocById(DocID).getPrivilege()/100==1)
+            return true;
+        else
+            return false;
+    }
+
+    @PostMapping("/doc/checkPriComment/{DocID}")
+    public boolean checkPriComment(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
+        if(UserID==docService.getDocById(DocID).getUserID())
+            return true;
+        else if(docService.getDocById(DocID).getPrivilege()/10==1)
+            return true;
+        else
+            return false;
+    }
+
+    @PostMapping("/doc/checkPriShare/{DocID")
+    public boolean checkPriShare(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
+        if(UserID==docService.getDocById(DocID).getUserID())
+            return true;
+        else if(docService.getDocById(DocID).getPrivilege()==1)
+            return true;
+        else
+            return false;
     }
 }

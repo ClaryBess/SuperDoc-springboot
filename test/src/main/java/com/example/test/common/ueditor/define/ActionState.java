@@ -1,4 +1,4 @@
-package com.cys.wtdp.common.ueditor.define;
+package com.example.test.common.ueditor.define;
 
 public enum ActionState {
 	UNKNOW_ERROR

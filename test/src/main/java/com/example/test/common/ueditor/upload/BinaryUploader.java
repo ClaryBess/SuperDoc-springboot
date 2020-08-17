@@ -1,10 +1,10 @@
-package com.cys.wtdp.common.ueditor.upload;
+package com.example.test.common.ueditor.upload;
 
-import com.cys.wtdp.common.ueditor.PathFormat;
-import com.cys.wtdp.common.ueditor.define.AppInfo;
-import com.cys.wtdp.common.ueditor.define.BaseState;
-import com.cys.wtdp.common.ueditor.define.FileType;
-import com.cys.wtdp.common.ueditor.define.State;
+import com.example.test.common.ueditor.PathFormat;
+import com.example.test.common.ueditor.define.AppInfo;
+import com.example.test.common.ueditor.define.BaseState;
+import com.example.test.common.ueditor.define.FileType;
+import com.example.test.common.ueditor.define.State;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
@@ -21,15 +21,15 @@ import java.util.Map;
 
 public class BinaryUploader {
     static Logger logger = LoggerFactory.getLogger(BinaryUploader.class);
-    
+
 	public static final State save(HttpServletRequest request, Map<String, Object> conf) {
-		
+
 		boolean isAjaxUpload = request.getHeader( "X_Requested_With" ) != null;
 
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			return new BaseState(false, AppInfo.NOT_MULTIPART_CONTENT);
 		}
-		
+
 		ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
 
         if ( isAjaxUpload ) {
@@ -49,23 +49,23 @@ public class BinaryUploader {
 
 			originFileName = originFileName.substring(0, originFileName.length() - suffix.length());
 			savePath = savePath + suffix;
-			
+
 			long maxSize = ((Long) conf.get("maxSize")).longValue();
 
 			if (!validType(suffix, (String[]) conf.get("allowFiles"))) {
 				return new BaseState(false, AppInfo.NOT_ALLOW_FILE_TYPE);
 			}
 			savePath = PathFormat.parse(savePath, originFileName);
-			localSavePathPrefix = localSavePathPrefix + savePath; 
+			localSavePathPrefix = localSavePathPrefix + savePath;
 			String physicalPath = localSavePathPrefix;
 			logger.info("BinaryUploader physicalPath:{},savePath:{}",localSavePathPrefix,savePath);
 			InputStream is = file.getInputStream();
-			
+
 			//在此处调用ftp的上传图片的方法将图片上传到文件服务器
 			String path = physicalPath.substring(0, physicalPath.lastIndexOf("/"));
 			String picName = physicalPath.substring(physicalPath.lastIndexOf("/")+1, physicalPath.length());
 			State storageState = StorageManager.saveFileByInputStream(request, is, path, picName, maxSize, suffix);
-			
+
 			is.close();
 
 			if (storageState.isSuccess()) {

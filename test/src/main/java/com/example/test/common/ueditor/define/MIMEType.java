@@ -1,4 +1,4 @@
-package com.cys.wtdp.common.ueditor.define;
+package com.example.test.common.ueditor.define;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,9 +12,9 @@ public class MIMEType {
 		put( "image/png", ".png" );
 		put( "image/bmp", ".bmp" );
 	}};
-	
+
 	public static String getSuffix ( String mime ) {
 		return MIMEType.types.get( mime );
 	}
-	
+
 }
