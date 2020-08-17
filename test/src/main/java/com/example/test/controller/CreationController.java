@@ -52,10 +52,10 @@ public class CreationController {
         }
         int flag = collectService.deleteByDocAndUser(collect.DocID, collect.UserID);
         if(flag == 0){
-            return new CommonResult(400,"failure",null);
+            return new CommonResult(400,"deleteCollect failure",null);
         }
         else {
-            return new CommonResult(200,"success",null);
+            return new CommonResult(200,"deleteCollect success",null);
         }
     }
 
@@ -66,10 +66,10 @@ public class CreationController {
         }
         int flag = docService.deleteDocById(collect.DocID,collect.UserID);
         if(flag == 0){
-            return new CommonResult(400,"failure",null);
+            return new CommonResult(400,"deleteDocument failure",null);
         }
         else{
-            return new CommonResult(200,"success",null);
+            return new CommonResult(200,"deleteDocument success",null);
         }
     }
 }
