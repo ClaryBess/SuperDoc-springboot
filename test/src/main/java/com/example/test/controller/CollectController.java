@@ -52,8 +52,8 @@ public class CollectController {
     }
 
     @PostMapping("/collect/deleteCollect")
-    public CommonResult deleteCollect(Integer DocID,Integer UserID){
-        collectService.deleteByDocAndUser(DocID, UserID);
+    public CommonResult deleteCollect(@RequestBody Collect collect){
+        collectService.deleteByDocAndUser(collect.getDocID(),collect.getUserID());
         return new CommonResult(200,null,null);
     }
 }
