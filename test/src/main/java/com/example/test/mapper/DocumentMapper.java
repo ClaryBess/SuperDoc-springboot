@@ -15,6 +15,9 @@ public interface DocumentMapper {
     @Select("select * from Document where UserID=#{UserID}")
     public List<Document> getDocByUser(Integer UserID);
 
+    @Select("select * from Document where UserID=#{UserID} and IsRecycle=1")
+    public List<Document> getRecycleByUser(Integer UserID);
+
     @Delete("delete from Document where DocID=#{DocID}")
     public int deleteDocById(Integer DocID);
 
@@ -30,6 +33,9 @@ public interface DocumentMapper {
 
     @Update("update Document set RecycleDateTime=#{RecycleDateTime},IsRecycle=#{IsRecycle} where DocID=#{DocID}")
     public int updateRec(Document document);
+
+    @Update("update Document set IsRecycle=0 where DocID=#{DocID}")
+    public int recoverDoc(Integer DocID);
 
     @Update("update Document set IsTeam=#{IsTeam},Team=#{Team} where DocID=#{DocID}")
     public int updateTea(Document document);

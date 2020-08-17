@@ -35,9 +35,9 @@ public class CollectController {
     }
 
     @PostMapping("/collect/collected")
-    public CommonResult collected(Integer DocID,Integer UserID){
-        Collect collect = collectService.getCollectByDocAndUser(DocID, UserID);
-        if(collect != null){
+    public CommonResult collected(@RequestBody Collect collect){
+        Collect collect1 = collectService.getCollectByDocAndUser(collect.DocID, collect.UserID);
+        if(collect1 != null){
             return new CommonResult(200,"collected",null);
         }
         else{
@@ -46,14 +46,22 @@ public class CollectController {
     }
 
     @PostMapping("/collect/insertCollect")
-    public CommonResult insertCollect(Integer DocID,Integer UserID){
-        Collect collect = collectService.insertCollect(DocID, UserID);
+    public CommonResult insertCollect(@RequestBody Collect collect){
+        Collect collect1 = collectService.insertCollect(collect.DocID, collect.UserID);
         return new CommonResult(200,null,collect);
     }
 
     @PostMapping("/collect/deleteCollect")
-    public CommonResult deleteCollect(Integer DocID,Integer UserID){
-        collectService.deleteByDocAndUser(DocID, UserID);
-        return new CommonResult(200,null,null);
+    public CommonResult deleteCollect(@RequestBody Collect collect){
+        if(collect == null){
+            return new CommonResult(500,"collect is null",null);
+        }
+        int flag = collectService.deleteByDocAndUser(collect.getDocID(),collect.getUserID());
+        if(flag == 0){
+            return new CommonResult(400,"failure",null);
+        }
+        else{
+            return new CommonResult(200,"success",null);
+        }
     }
 }

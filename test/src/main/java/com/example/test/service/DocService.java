@@ -29,6 +29,10 @@ public class DocService {
         return documentMapper.getDocByUser(userID);
     }
 
+    public List<Document> getRecycleByUser(Integer UserID){
+        return documentMapper.getRecycleByUser(UserID);
+    }
+
     //删除文档,只有创建者有权限
     public int deleteDocById(Integer docID,Integer userID){
         Document document = documentMapper.getDocById(docID);
@@ -54,6 +58,15 @@ public class DocService {
         Document document1 = documentMapper.getDocById(document.getDocID());
         if(document1.getUserID() == userID){
             documentMapper.updateRec(document);
+            return 1;
+        }
+        return 0;
+    }
+
+    public int recoverDoc(Integer DocID,Integer UserID){
+        Document document = documentMapper.getDocById(DocID);
+        if(document.getUserID() == UserID){
+            documentMapper.recoverDoc(DocID);
             return 1;
         }
         return 0;

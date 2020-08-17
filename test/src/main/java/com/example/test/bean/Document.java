@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public class Document {
 
-    private Integer DocID;
-    private Integer UserID;
+    public Integer DocID;
+    public Integer UserID;
     private String Title;
     private Date DateTime;
     private String Content;

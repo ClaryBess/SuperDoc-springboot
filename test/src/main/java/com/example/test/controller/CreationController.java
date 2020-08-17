@@ -7,6 +7,7 @@ import com.example.test.service.CollectService;
 import com.example.test.service.DocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,17 +20,18 @@ public class CreationController {
     @Autowired
     CollectService collectService;
 
-//    需要一个接口 通过userID 得到(Document) List
     @PostMapping("/created/getDocument")
-    public List<Document> getDocument(Integer UserID){
+    public List<Document> getDocument(@RequestBody Integer UserID){
         return docService.getDocByUser(UserID);
     }
 
-//    需要一个接口 通过DocID userID 判断该文档是否被收藏 *
     @PostMapping("/created/collected")
-    public CommonResult collected(Integer DocID,Integer UserID){
-        Collect collect = collectService.getCollectByDocAndUser(DocID, UserID);
-        if(collect != null){
+    public CommonResult collected(@RequestBody Collect collect){
+        if(collect == null){
+            return new CommonResult(500,"collect is null",null);
+        }
+        Collect collect1 = collectService.getCollectByDocAndUser(collect.DocID, collect.UserID);
+        if(collect1 != null){
             return new CommonResult(200,"yes",null);
         }
         else{
@@ -37,24 +39,37 @@ public class CreationController {
         }
     }
 
-//    需要一个接口 通过DocID userID 修改该文档是否被收藏 *
     @PostMapping("/created/insertCollect")
-    public CommonResult insertCollect(Integer DocID,Integer UserID){
-        Collect collect = collectService.insertCollect(DocID, UserID);
-        return new CommonResult(200,null,collect);
+    public CommonResult insertCollect(@RequestBody Collect collect){
+        Collect collect1 = collectService.insertCollect(collect.DocID, collect.UserID);
+        return new CommonResult(200,null,collect1);
     }
 
     @PostMapping("/created/deleteCollect")
-    public CommonResult deleteCollect(Integer DocID,Integer UserID){
-        collectService.deleteByDocAndUser(DocID, UserID);
-        return new CommonResult(200,null,null);
+    public CommonResult deleteCollect(@RequestBody Collect collect){
+        if(collect == null){
+            return new CommonResult(500,null,null);
+        }
+        int flag = collectService.deleteByDocAndUser(collect.DocID, collect.UserID);
+        if(flag == 0){
+            return new CommonResult(400,"deleteCollect failure",null);
+        }
+        else {
+            return new CommonResult(200,"deleteCollect success",null);
+        }
     }
 
-
-//    需要一个接口 通过DocID userID 删除自己创建的文档
     @PostMapping("created/deleteDocument")
-    public CommonResult deleteDocument(Integer DocID,Integer UserID){
-        docService.deleteDocById(DocID,UserID);
-        return new CommonResult(200,null,null);
+    public CommonResult deleteDocument(@RequestBody Collect collect){
+        if(collect == null){
+            return new CommonResult(500,null,null);
+        }
+        int flag = docService.deleteDocById(collect.DocID,collect.UserID);
+        if(flag == 0){
+            return new CommonResult(400,"deleteDocument failure",null);
+        }
+        else{
+            return new CommonResult(200,"deleteDocument success",null);
+        }
     }
 }
