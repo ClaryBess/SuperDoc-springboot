@@ -61,8 +61,11 @@ public class BrowseController {
     }
 
     @PostMapping("/browse/deleteBrowse")
-    public CommonResult deleteBrowse(@RequestParam("DocID")Integer DocID,@RequestParam("UserID")Integer UserID){
-        int flag = browseService.deleteBrowseByDocAndUser(DocID, UserID);
+    public CommonResult deleteBrowse(@RequestBody Browse browse){
+        if(browse == null){
+            return new CommonResult(400,"failure",null);
+        }
+        int flag = browseService.deleteBrowseByDocAndUser(browse.DocID,browse.UserID);
         if(flag == 0){
             return new CommonResult(400,"failure",null);
         }
@@ -70,18 +73,4 @@ public class BrowseController {
             return new CommonResult(200,"success",null);
         }
     }
-
-//    @PostMapping("/browse/deleteBrowse")
-//    public CommonResult deleteBrowse(@RequestBody Browse browse){
-//        if(browse == null){
-//            return new CommonResult(400,"failure",null);
-//        }
-//        int flag = browseService.deleteBrowseByDocAndUser(browse.DocID,browse.UserID);
-//        if(flag == 0){
-//            return new CommonResult(400,"failure",null);
-//        }
-//        else{
-//            return new CommonResult(200,"success",null);
-//        }
-//    }
 }

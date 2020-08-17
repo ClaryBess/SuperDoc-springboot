@@ -5,8 +5,8 @@ import java.sql.Date;
 public class Collect {
 
     private Integer CollectID;
-    private Integer DocID;
-    private Integer UserID;
+    public Integer DocID;
+    public Integer UserID;
     private Date DateTime;
 
     public Integer getCollectID() {

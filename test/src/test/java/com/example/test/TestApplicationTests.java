@@ -32,8 +32,6 @@ public class TestApplicationTests {
 	@Test
 	public void testBrowse(){
 		System.out.println(browseService.getBrowseByUser(1));
-//		System.out.println(browseService.deleteBrowseByDocAndUser(1,1));
-        System.out.println(browseController.deleteBrowse(2,1));
 	}
 
 }
