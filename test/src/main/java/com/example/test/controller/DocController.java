@@ -85,8 +85,9 @@ public class DocController {
 //    }
 
     @PostMapping("/doc/get/{DocID}")
-    public Document getDoc(@PathVariable("DocID") Integer DocID){
-        return docService.getDocById(DocID);
+    public CommonResult getDoc(@PathVariable("DocID") Integer DocID){
+        System.out.println(docService.getDocById(DocID));
+        return new CommonResult(200,null,docService.getDocById(DocID));
     }
 
     @PostMapping("/doc/checkPriView/{DocID")
