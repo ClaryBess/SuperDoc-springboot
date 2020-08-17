@@ -71,7 +71,7 @@ public class DocController {
     }
 
     @RequestMapping(value = "/doc",method = RequestMethod.POST)
-    public CommonResult register(@RequestBody Document document){
+    public CommonResult buildDoc(@RequestBody Document document){
         System.out.println(document.getTitle());
         System.out.println("user"+document.getUserID());
         Integer result=docService.insertDoc(document).getDocID();
@@ -86,11 +86,10 @@ public class DocController {
 
     @PostMapping("/doc/get/{DocID}")
     public CommonResult getDoc(@PathVariable("DocID") Integer DocID){
-        System.out.println(docService.getDocById(DocID));
         return new CommonResult(200,null,docService.getDocById(DocID));
     }
 
-    @PostMapping("/doc/checkPriView/{DocID")
+    @PostMapping("/doc/checkPriView/{DocID}")
     public boolean checkPriView(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
@@ -120,7 +119,7 @@ public class DocController {
             return false;
     }
 
-    @PostMapping("/doc/checkPriShare/{DocID")
+    @PostMapping("/doc/checkPriShare/{DocID}")
     public boolean checkPriShare(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;

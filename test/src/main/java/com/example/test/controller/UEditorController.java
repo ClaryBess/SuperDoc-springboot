@@ -1,8 +1,8 @@
 package com.example.test.controller;
 
-import com.baidu.ueditor.ActionEnter;
 import com.example.test.bean.UEditorFile;
 import com.example.test.bean.UEditorUpload;
+import com.example.test.common.ueditor.ActionEnter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 @RestController
+@RequestMapping("/ueditor")
 public class UEditorController {
     /*@Autowired
     private UEditorUpload uEditorUpload;
