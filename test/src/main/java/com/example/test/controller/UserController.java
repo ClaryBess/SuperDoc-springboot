@@ -54,16 +54,32 @@ public class UserController {
         return new CommonResult(200,null,result);
     }
 
+//    @RequestMapping(value="/user/login",method = RequestMethod.POST)
+//    public CommonResult login(@RequestBody User user){
+//        System.out.println("L:User="+user.toString());
+//        User user1=userService.loginIn(user.getUserName(),user.getPassword());
+//        //需要先判断user1 是否为null
+//        System.out.println("L:User="+user.toString());
+//        System.out.println("UserName="+user.getUserName());
+//        System.out.println("Password="+user.getPassword());
+//        System.out.println("Password2="+user1.getPassword());
+//        if(user1!=null){
+//            return new CommonResult(200,"success",user1);
+//        }
+//        else {
+//            return new CommonResult(500,"failure",null);
+//        }
+//    }
+
     @RequestMapping(value="/user/login",method = RequestMethod.POST)
     public CommonResult login(@RequestBody User user){
-        User user1=userService.loginIn(user.getUserName(),user.getPassword());
+        User user1=userMapper.getUserByName(user.getUserName());
         //需要先判断user1 是否为null
-        System.out.println("L:User="+user.toString());
         System.out.println("UserName="+user.getUserName());
         System.out.println("Password="+user.getPassword());
         System.out.println("Password2="+user1.getPassword());
-        if(user1!=null){
-            return new CommonResult(200,"success",user);
+        if(user1!=null&&user.getPassword().equals(user1.getPassword())){
+            return new CommonResult(200,"success",user1);
         }
         else {
             return new CommonResult(500,"failure",null);
