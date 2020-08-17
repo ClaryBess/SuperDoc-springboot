@@ -11,8 +11,11 @@ public interface BrowseMapper {
     @Select("select * from Browse where BrowseID=#{BrowseID}")
     public Browse getBrowseById(Integer BrowseID);
 
-    @Select("select * from Browse where UserID=#{UserID}")
+    @Select("select * from Browse where UserID=#{UserID} order by DateTime desc")
     public List<Browse> getBrowseByUser(Integer UserID);
+
+    @Select("select * from Browse where DocID=#{DocID} and UserID=#{UserID}")
+    public Browse getBrowseByDocAndUser(Integer DocID,Integer UserID);
 
     @Options(useGeneratedKeys = true,keyProperty = "BrowseID")
     @Insert("insert into Browse(DocID,UserID) values(#{DocID},#{UserID})")

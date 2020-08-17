@@ -1,5 +1,7 @@
 package com.example.test;
 
+import com.example.test.bean.Browse;
+import com.example.test.bean.Document;
 import com.example.test.controller.BrowseController;
 import com.example.test.service.BrowseService;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 public class TestApplicationTests {
@@ -30,8 +34,8 @@ public class TestApplicationTests {
 	}
 
 	@Test
-	public void testBrowse(){
-		System.out.println(browseService.getBrowseByUser(1));
+	public void testGetBrowse(){
+		System.out.println(browseController.getBrowse(1));
 	}
 
 }

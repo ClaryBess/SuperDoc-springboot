@@ -50,4 +50,8 @@ public class CollectService {
         return collectMapper.getCollectByDocAndUser(DocID,UserID);
     }
 
+    public Integer getSum(Integer DocID){
+        return collectMapper.getSum(DocID);
+    }
+
 }

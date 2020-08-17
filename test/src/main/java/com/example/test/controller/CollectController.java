@@ -47,8 +47,14 @@ public class CollectController {
 
     @PostMapping("/collect/insertCollect")
     public CommonResult insertCollect(@RequestBody Collect collect){
-        Collect collect1 = collectService.insertCollect(collect.DocID, collect.UserID);
-        return new CommonResult(200,null,collect);
+        Collect collect1 = collectService.getCollectByDocAndUser(collect.DocID,collect.UserID);
+        if(collect1 != null){
+            return new CommonResult(200,"already collected",collect);
+        }
+        else{
+            Collect collect2 = collectService.insertCollect(collect.DocID, collect.UserID);
+            return new CommonResult(200,"success",collect);
+        }
     }
 
     @PostMapping("/collect/deleteCollect")
@@ -63,5 +69,9 @@ public class CollectController {
         else{
             return new CommonResult(200,"success",null);
         }
+    }
+
+    public int getCollectNumber(@RequestBody Integer DocID){
+        return collectService.getSum(DocID);
     }
 }

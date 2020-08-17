@@ -15,8 +15,15 @@ public class BrowseService {
 
     //添加浏览记录
     public Browse insertBrowse(Browse browse){
-        browseMapper.insertBrowse(browse);
-        return browseMapper.getBrowseById(browse.getBrowseID());
+        Browse browse1 = browseMapper.getBrowseByDocAndUser(browse.DocID,browse.UserID);
+        if(browse1 != null){
+            browseMapper.updateDateTime(browse1.getBrowseID());
+            return browse1;
+        }
+        else{
+            browseMapper.insertBrowse(browse);
+            return browseMapper.getBrowseById(browse.getBrowseID());
+        }
     }
 
     //删除

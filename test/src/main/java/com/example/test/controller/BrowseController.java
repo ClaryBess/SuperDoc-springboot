@@ -36,8 +36,8 @@ public class BrowseController {
 
     @PostMapping("/browse/insertBrowse")
     public CommonResult insertBrowse(@RequestBody Browse browse){
-        browseService.insertBrowse(browse);
-        Browse browse1 = browseService.getBrowseById(browse.getBrowseID());
+        //判断是否重复的业务逻辑已经在BrowseService实现
+        Browse browse1 = browseService.insertBrowse(browse);
         return new CommonResult(200,null,browse1);
     }
 
