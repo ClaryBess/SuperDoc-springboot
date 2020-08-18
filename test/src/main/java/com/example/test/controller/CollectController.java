@@ -6,7 +6,9 @@ import com.example.test.bean.Document;
 import com.example.test.service.CollectService;
 import com.example.test.service.DocService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +73,6 @@ public class CollectController {
         }
     }
 
-    @PostMapping("/collect/collectNum")
     public int getCollectNumber(@RequestBody Integer DocID){
         return collectService.getSum(DocID);
     }

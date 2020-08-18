@@ -3,14 +3,11 @@ package com.example.test.controller;
 import com.example.test.bean.Comment;
 import com.example.test.bean.CommentShow;
 import com.example.test.bean.CommonResult;
-import com.example.test.bean.Document;
 import com.example.test.service.CommentService;
 import com.example.test.service.UserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +16,7 @@ public class CommentController {
 
     @Autowired
     CommentService commentService;
+
 @Autowired
     UserService userService;
 
@@ -26,6 +24,7 @@ public class CommentController {
     public Comment insertComment(Comment comment){
         return commentService.insertComment(comment);
     }
+
 
     @PostMapping("/comment/add")
     public CommonResult addComment(@RequestBody Comment comment){

@@ -13,7 +13,7 @@ public class CollectService {
     @Autowired
     CollectMapper collectMapper;
 
-    public Collect insertCollect(Integer DocID,Integer UserID){
+    public Collect insertCollect(Integer DocID, Integer UserID){
         Collect collect1 = collectMapper.getCollectByDocAndUser(DocID,UserID);
         if(collect1 != null){
             return collect1;
@@ -46,7 +46,7 @@ public class CollectService {
         return collectMapper.getCollectById(CollectID);
     }
 
-    public Collect getCollectByDocAndUser(Integer DocID,Integer UserID){
+    public Collect getCollectByDocAndUser(Integer DocID, Integer UserID){
         return collectMapper.getCollectByDocAndUser(DocID,UserID);
     }
 

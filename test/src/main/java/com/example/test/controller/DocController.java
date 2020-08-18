@@ -22,6 +22,8 @@ public class DocController {
     EditService editService;
 
 
+
+
     @GetMapping("/doc/user/{UserID}")
     public List<Document> getDocByUser(@PathVariable("UserID") Integer UserID){
         return docService.getDocByUser(UserID);
@@ -73,6 +75,7 @@ public class DocController {
         documentMapper.collectDoc(DocID);
         return documentMapper.getDocById(DocID);
     }
+
 
     @RequestMapping(value = "/doc",method = RequestMethod.POST)
     public CommonResult buildDoc(@RequestBody Document document){
@@ -148,7 +151,7 @@ public class DocController {
     @PostMapping("/ doc/beginEdit/{DocID}")
     public CommonResult beginEdit(@PathVariable Integer DocID){
         docService.getDocById(DocID).setEditable(1);
-        return new CommonResult(200,null,null;
+        return new CommonResult(200,null,null);
     }
 
     @RequestMapping(value = "/doc/edit",method = RequestMethod.POST)
@@ -156,6 +159,7 @@ public class DocController {
         docService.updatePri(document,document.UserID);
         docService.updateEdi(document);
         docService.updateCon(document);
+        docService.updateTitle(document);
         Edit edit=new Edit();
         edit.setDocID(document.DocID);
         edit.setUserID(document.UserID);

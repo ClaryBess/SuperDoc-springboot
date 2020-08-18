@@ -15,14 +15,14 @@ public interface CollectMapper {
     public List<Collect> getCollectByUser(Integer UserID);
 
     @Select("select * from Collect where DocID=#{DocID} and UserID=#{UserID}")
-    public Collect getCollectByDocAndUser(Integer DocID,Integer UserID);
+    public Collect getCollectByDocAndUser(Integer DocID, Integer UserID);
 
     @Select("select count(*) from Collect where DocID=#{DocID}")
     public Integer getSum(Integer DocID);
 
     @Options(useGeneratedKeys = true,keyProperty = "CollectID")
     @Insert("insert into Collect(UserID,DocID) values(#{UserID},#{DocID})")
-    public int insertCollect(Integer DocID,Integer UserID);
+    public int insertCollect(Integer DocID, Integer UserID);
 
     @Delete("delete from Collect where CollectID=#{CollectID}")
     public int deleteById(Integer CollectID);
@@ -34,5 +34,5 @@ public interface CollectMapper {
     public int deleteByDoc(Integer DocID);
 
     @Delete("delete from Collect where DocID=#{DocID} and UserID=#{UserID}")
-    public int deleteByDocAndUser(Integer DocID,Integer UserID);
+    public int deleteByDocAndUser(Integer DocID, Integer UserID);
 }
