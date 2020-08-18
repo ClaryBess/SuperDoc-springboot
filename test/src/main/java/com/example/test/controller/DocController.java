@@ -133,7 +133,7 @@ public class DocController {
     public boolean checkPriShare(@PathVariable Integer DocID,@RequestBody Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
-        else if(docService.getDocById(DocID).getPrivilege()-(docService.getDocById(DocID).getPrivilege()/100)*10==1)
+        else if(docService.getDocById(DocID).getPrivilege()-(docService.getDocById(DocID).getPrivilege()/10)*10==1)
             return true;
         else
             return false;
