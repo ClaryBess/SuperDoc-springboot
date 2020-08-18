@@ -3,6 +3,7 @@ package com.example.test;
 import com.example.test.bean.Browse;
 import com.example.test.bean.Document;
 import com.example.test.controller.BrowseController;
+import com.example.test.controller.RecycleController;
 import com.example.test.service.BrowseService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class TestApplicationTests {
 	BrowseService browseService;
 	@Autowired
 	BrowseController browseController;
+	@Autowired
+	RecycleController recycleController;
 
 	@Test
 	public void contextLoads() throws SQLException {
@@ -36,6 +39,11 @@ public class TestApplicationTests {
 	@Test
 	public void testGetBrowse(){
 		System.out.println(browseController.getBrowse(1));
+	}
+
+	@Test
+	public void testDelete(){
+
 	}
 
 }
