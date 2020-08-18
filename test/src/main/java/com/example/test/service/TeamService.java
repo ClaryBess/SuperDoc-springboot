@@ -96,21 +96,19 @@ public class TeamService{
     }
 
     public List<Team> getTeamByUser(Integer UserID){
-
+        List<Team> teams1 = teamMapper.getTeamByUser(UserID);
         List<Team> teams = new ArrayList<Team>();
         List<Member> members = memberMapper.getMemberByUser(UserID);
-        if(members == null || members.size() == 0){
-            return null;
-        }
-        for(Member member : members){
-            Integer TeamID = member.getTeamID();
-            Team team = teamMapper.getTeamById(TeamID);
-            teams.add(team);
-        }
-        List<Team> teams1 = teamMapper.getTeamByUser(UserID);
-        if(teams != null && teams.size() > 0){
-            for(Team team : teams){
-                teams1.add(team);
+        if(members!= null && members.size() != 0){
+            for(Member member : members){
+                Integer TeamID = member.getTeamID();
+                Team team = teamMapper.getTeamById(TeamID);
+                teams.add(team);
+            }
+            if(teams != null && teams.size() > 0) {
+                for (Team team : teams) {
+                    teams1.add(team);
+                }
             }
         }
         return teams1;
