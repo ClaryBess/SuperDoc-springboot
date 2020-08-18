@@ -23,9 +23,11 @@ public class NewsService {
         return news;
     }
 
-    public News readNews(Integer NewsID){
-        newsMapper.updateRead(NewsID);
-        return newsMapper.SelectNewsByNewsId(NewsID);
+    public int updateRead(News news){
+        if(news == null){
+            return 0;
+        }
+        return newsMapper.updateRead(news.getNewsID());
     }
 
     public int deleteById(News news){
