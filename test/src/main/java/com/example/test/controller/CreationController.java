@@ -42,7 +42,7 @@ public class CreationController {
 
     @PostMapping("/created/insertCollect")
     public CommonResult insertCollect(@RequestBody Collect collect){
-        Collect collect1 = collectService.insertCollect(collect.DocID, collect.UserID);
+        Collect collect1 = collectService.insertCollect(collect);
         return new CommonResult(200,null,collect1);
     }
 
@@ -60,21 +60,21 @@ public class CreationController {
         }
     }
 
-    @GetMapping("created/delete")
-    public CommonResult delete(Collect collect){
-        if(collect == null || collect.getDocID() == null || collect.getUserID() == null){
-            return new CommonResult(500,null,null);
-        }
-        int flag = docService.recycleDoc(collect.getDocID(),collect.getUserID());
-        if(flag == 2)
-            return new CommonResult(500,"document does not exist",null);
-        else if(flag == 1)
-            return new CommonResult(400,"you are not the creator",null);
-        else
-            return new CommonResult(200,"delete success",null);
-    }
+//    @GetMapping("created/delete")
+//    public CommonResult delete(Collect collect){
+//        if(collect == null || collect.getDocID() == null || collect.getUserID() == null){
+//            return new CommonResult(500,null,null);
+//        }
+//        int flag = docService.recycleDoc(collect.getDocID(),collect.getUserID());
+//        if(flag == 2)
+//            return new CommonResult(500,"document does not exist",null);
+//        else if(flag == 1)
+//            return new CommonResult(400,"you are not the creator",null);
+//        else
+//            return new CommonResult(200,"delete success",null);
+//    }
 
-    @PostMapping("created/deleteDocument")
+    @PostMapping("/created/deleteDocument")
     public CommonResult deleteDocument(@RequestBody Collect collect){
         if(collect == null || collect.DocID == null || collect.UserID == null){
             return new CommonResult(500,null,null);

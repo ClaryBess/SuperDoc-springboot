@@ -54,5 +54,4 @@ public interface TeamMapper {
     @Select("select * from Team where TeamName=#{name}")
     Team getTeamByName(String name);
 
-
 }

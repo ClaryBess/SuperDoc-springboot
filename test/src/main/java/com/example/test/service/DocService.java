@@ -47,6 +47,11 @@ public class DocService {
         return 0;
     }
 
+    public List<Document> getAllRecycle(Integer UserID){
+        List<Document> documentList = documentMapper.getRecycleByUser(UserID);
+        return documentList;
+    }
+
     //修改权限信息，只有创建者有权限
     public int updatePri(Document document, Integer userID){
         Document document1 = documentMapper.getDocById(document.getDocID());

@@ -2,6 +2,7 @@ package com.example.test.service;
 
 import com.example.test.bean.Member;
 import com.example.test.bean.Team;
+import com.example.test.bean.User;
 import com.example.test.mapper.MemberMapper;
 import com.example.test.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,10 +125,12 @@ public class TeamServiceImpl implements TeamService {
         return teamMapper.getTeamByName(name);
     }
 
+
     @Override
     public Team getTeamByUser(Integer userID){
         Member member = memberMapper.getMemberByUser(userID);
         return teamMapper.getTeamById(member.getTeamID());
+
     }
 
     /**

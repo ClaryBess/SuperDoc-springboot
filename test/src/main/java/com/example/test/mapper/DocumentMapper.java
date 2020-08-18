@@ -15,14 +15,17 @@ public interface DocumentMapper {
     @Select("select * from Document where UserID=#{UserID}")
     public List<Document> getDocByUser(Integer UserID);
 
-    @Select("select * from Document where UserID=#{UserID} and IsRecycle=0")
+    @Select("select * from Document where UserID=#{UserID} and IsRecycle=0 order by DateTime desc")
     public List<Document> getExistDocByUser(Integer UserID);
 
-    @Select("select * from Document where UserID=#{UserID} and IsRecycle=1")
+    @Select("select * from Document where UserID=#{UserID} and IsRecycle=1 order by DateTime desc")
     public List<Document> getRecycleByUser(Integer UserID);
 
     @Delete("delete from Document where DocID=#{DocID}")
     public int deleteDocById(Integer DocID);
+
+    @Delete("delete from Document where UserID=#{UserID} and IsRecycle=1")
+    public int deleteAllRecycle(Integer UserID);
 
     @Options(useGeneratedKeys = true,keyProperty = "DocID")
     @Insert("insert into Document(UserID,Title,Content,Privilege,IsTeam,Team,RecycleDateTime) values(#{UserID},#{Title},#{Content},#{Privilege},#{IsTeam},#{Team},#{RecycleDateTime})")

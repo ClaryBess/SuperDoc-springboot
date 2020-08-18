@@ -6,6 +6,7 @@ import com.example.test.bean.Document;
 import com.example.test.service.CollectService;
 import com.example.test.service.DocService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,14 +50,8 @@ public class CollectController {
 
     @PostMapping("/collect/insertCollect")
     public CommonResult insertCollect(@RequestBody Collect collect){
-        Collect collect1 = collectService.getCollectByDocAndUser(collect.DocID,collect.UserID);
-        if(collect1 != null){
-            return new CommonResult(200,"already collected",collect);
-        }
-        else{
-            Collect collect2 = collectService.insertCollect(collect.DocID, collect.UserID);
-            return new CommonResult(200,"success",collect);
-        }
+        Collect collect1 = collectService.insertCollect(collect);
+        return new CommonResult(200,null,collect1);
     }
 
     @PostMapping("/collect/deleteCollect")
