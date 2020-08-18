@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class News {
     private Integer NewsID;
+    private Integer UserID;
     private Date DateTime;
     private Integer Type;
     private Integer IsRead;
@@ -17,7 +18,15 @@ public class News {
         IsRead = isRead;
     }
 
-    public int getNewsID() {
+    public Integer getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(Integer userID) {
+        UserID = userID;
+    }
+
+    public Integer getNewsID() {
         return NewsID;
     }
 
@@ -33,7 +42,7 @@ public class News {
         DateTime = dateTime;
     }
 
-    public int getType() {
+    public Integer getType() {
         return Type;
     }
 

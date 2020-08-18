@@ -24,7 +24,7 @@ public interface NewsMapper {
 
     //修改已读状态
     @Update("update News set IsRead=1 where NewsID=#{NewsID}")
-    void changeNewsIsRead(Integer NewsID);
+    public int changeNewsIsRead(News news);
 
     //根据NewsID查看消息
     @Select("select * from News where NewsID=#{NewsID}")
@@ -33,4 +33,7 @@ public interface NewsMapper {
     //根据UserID查看消息
     @Select("select * from News where UserID=#{UserID}")
     List<News> SelectNewsByUserId(Integer UserID);
+
+    @Delete("delete from News where NewsID=#{NewsID}")
+    public int deleteById(News news);
 }
