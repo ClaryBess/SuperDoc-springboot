@@ -27,17 +27,13 @@ public class NewsController {
 
     @PostMapping("/news/readNews")
     public CommonResult readNews(@RequestBody News news){
-        News news1 = newsService.readNews(news.NewsID);
-        return new CommonResult(200,"success",news1);
-    }
-
-    //这是后端测试用的
-    @GetMapping("/news/read")
-    public News read(News news){
-        Integer NewsID = news.getNewsID();
-        return newsService.readNews(NewsID);
-//        newsMapper.updateRead(NewsID);
-//        return newsMapper.SelectNewsByNewsId(NewsID);
+        int flag = newsService.updateRead(news);
+        if(flag == 0){
+            return new CommonResult(400,"no influence",null);
+        }
+        else{
+            return new CommonResult(200,"success",null);
+        }
     }
 
     @PostMapping("/news/deleteNews")

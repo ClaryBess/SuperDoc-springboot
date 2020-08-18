@@ -15,10 +15,10 @@ public interface DocumentMapper {
     @Select("select * from Document where UserID=#{UserID}")
     public List<Document> getDocByUser(Integer UserID);
 
-    @Select("select * from Document where UserID=#{UserID} and IsRecycle=0")
+    @Select("select * from Document where UserID=#{UserID} and IsRecycle=0 order by DateTime desc")
     public List<Document> getExistDocByUser(Integer UserID);
 
-    @Select("select * from Document where UserID=#{UserID} and IsRecycle=1")
+    @Select("select * from Document where UserID=#{UserID} and IsRecycle=1 order by DateTime desc")
     public List<Document> getRecycleByUser(Integer UserID);
 
     @Delete("delete from Document where DocID=#{DocID}")

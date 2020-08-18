@@ -1,38 +1,114 @@
 package com.example.test.service;
 
+import com.example.test.bean.Member;
 import com.example.test.bean.Team;
 import com.example.test.bean.User;
+import com.example.test.mapper.MemberMapper;
+import com.example.test.mapper.TeamMapper;
+import com.example.test.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface TeamService {
-    //创建团队
-    Team createTeam(Team team);
+import java.util.ArrayList;
+import java.util.List;
 
-    //修改团队名称
-    //int updateTeamName(Team team,Integer userID);
+@Service
+public class TeamService{
 
-    //添加团队成员
-    int addMember(Integer TeamID,Integer memberID,Integer userID);
+    @Autowired
+    TeamMapper teamMapper;
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
+    MemberMapper memberMapper;
 
-    //删除团队成员
-    int deleteMember(Integer TeamID,Integer memberID,Integer userID);
+    public Team insertTeam(Team team){
+        if(team == null || team.getTeamName() == null || team.getMemberNumber() == null || team.getPrivilege() == null){
+            return null;
+        }
+        Integer UserID = team.getUserID();
+        User user = userMapper.getUserById(UserID);;
+        if(UserID != null && user == null){
+            return null;
+        }
+        teamMapper.insertTeam(team);
+        return teamMapper.getTeamById(team.getTeamID());
+    }
 
-    //修改团队权限
-    int changePrivilege(Team team,Integer userID);
+    public Member insertMember(Member member){
+        Integer TeamID = member.getTeamID();
+        Integer UserID = member.getUserID();
+        Member member1 = memberMapper.getMemberByTeamAndUser(TeamID,UserID);
+        if(member1 != null){
+            return member1;
+        }
+        Team team = teamMapper.getTeamById(TeamID);
+        User user = userMapper.getUserById(UserID);
+        if(team == null || user == null){
+            return null;
+        }
+        memberMapper.insertMember(member);
+        return memberMapper.getMemberById(member.getMemberID());
+    }
 
-    //修改团队简介
-    int changeTeamInfo(Team team,Integer userID);
+    //删除成员,用于成员退出或者被移出
+    public void deleteByTeamAndUser(Integer TeamID,Integer UserID){
+        memberMapper.deleteByTeamAndUser(TeamID, UserID);
+        teamMapper.downNum(TeamID);
+    }
 
-    //解散团队
-    int removeTeam(Team team,Integer userID);
+    //删除团队
+    public int deleteTeam(Integer TeamID){
+        return teamMapper.deleteTeamById(TeamID);
+    }
 
-    //根据团队id查找团队
-    Team getTeamById(Integer id);
+    public int updateTeamName(Team team,Integer userID){
+        Team team1 = teamMapper.getTeamById(team.getTeamID());
+        if(team1.getUserID() == userID){
+            teamMapper.updateName(team);
+            return 1;
+        }
+        return 0;
+    }
 
-    //根据团队名称选择团队
-    Team getTeamByName(String name);
+    public int updatePri(Team team,Integer userID){
+        Team team1 = teamMapper.getTeamById(team.getTeamID());
+        if(team1.getUserID() == userID){
+            teamMapper.updatePri(team);
+            return 1;
+        }
+        return 0;
+    }
 
-    //根据用户id查询所在团队
-    Team getTeamByUser(Integer userID);
+    public int updateInfo(Team team,Integer userID){
+        Team team1 = teamMapper.getTeamById(team.getTeamID());
+        if(team1.getUserID() == userID){
+            teamMapper.updateInf(team);
+            return 1;
+        }
+        return 0;
+    }
 
-    int quitTeam(Integer TeamID,Integer UserID);
+    public Team getTeamById(Integer id){
+        return teamMapper.getTeamById(id);
+    }
+
+    public Team getTeamByName(String name){
+        return teamMapper.getTeamByName(name);
+    }
+
+    public List<Team> getTeamByUser(Integer UserID){
+        List<Team> teams = new ArrayList<Team>();
+        List<Member> members = memberMapper.getMemberByUser(UserID);
+        if(members == null || members.size() == 0){
+            return null;
+        }
+        for(Member member : members){
+            Integer TeamID = member.getTeamID();
+            Team team = teamMapper.getTeamById(TeamID);
+            teams.add(team);
+        }
+        return teams;
+    }
+
 }
