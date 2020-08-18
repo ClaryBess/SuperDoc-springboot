@@ -25,6 +25,9 @@ public interface DocumentMapper {
     @Insert("insert into Document(UserID,Title,Content,Privilege,IsTeam,Team,RecycleDateTime) values(#{UserID},#{Title},#{Content},#{Privilege},#{IsTeam},#{Team},#{RecycleDateTime})")
     public int insertDoc(Document document);
 
+    @Update("update Document set Title=#{Title} where DocID=#{DocID}")
+    public int updateTitle(Document document);
+
     @Update("update Document set Content=#{Content} where DocID=#{DocID}")
     public int updateCon(Document document);
 
