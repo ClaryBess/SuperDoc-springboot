@@ -4,20 +4,28 @@ import com.example.test.bean.Member;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Mapper
 public interface MemberMapper {
 
-    //根据用户id返回加入团队
-    @Select("select * from Member where UserID=#{userID}")
-    public Member getMemberByUser(Integer userID);
+    @Select("select * from Member where MemberID=#{MemberID}")
+    public Member getMemberById(Integer MemberID);
+
+    //用户所有加入
+    @Select("select * from Member where UserID=#{UserID}")
+    public List<Member> getMemberByUser(Integer UserID);
+
+    @Select("select * from Member where TeamID=#{TeamID} and UserID=#{UserID}")
+    public Member getMemberByTeamAndUser(Integer TeamID,Integer UserID);
 
     //添加成员
     @Options(useGeneratedKeys = true,keyProperty = "MemberID")
     @Insert("insert into Member(TeamID,UserID) values(#{TeamID},#{UserID})")
-    int insertMember(Integer TeamID,Integer UserID);
+    public int insertMember(Member member);
 
     //删除成员
     @Delete("delete from Member where UserID=#{UserID} and TeamID=#{TeamID}")
-    int deleteMember(Integer TeamID,Integer UserID);
+    public int deleteByTeamAndUser(Integer TeamID,Integer UserID);
 }
