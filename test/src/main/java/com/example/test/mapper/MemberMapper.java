@@ -20,6 +20,9 @@ public interface MemberMapper {
     @Select("select * from Member where TeamID=#{TeamID} and UserID=#{UserID}")
     public Member getMemberByTeamAndUser(Integer TeamID,Integer UserID);
 
+    @Select("select * from Member where TeamID=#{TeamID}")
+    public List<Member> getMemberByTeam(Integer TeamID);
+
     //添加成员
     @Options(useGeneratedKeys = true,keyProperty = "MemberID")
     @Insert("insert into Member(TeamID,UserID) values(#{TeamID},#{UserID})")

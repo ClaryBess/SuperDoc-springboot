@@ -114,4 +114,7 @@ public class TeamService{
         return teams1;
     }
 
+    public List<Member> getMemberByTeam(Integer TeamID){
+        return memberMapper.getMemberByTeam(TeamID);
+    }
 }
