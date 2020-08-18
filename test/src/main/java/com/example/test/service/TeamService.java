@@ -5,21 +5,34 @@ import com.example.test.bean.User;
 
 public interface TeamService {
     //创建团队
-    Team createTeam(String teamname);
+    Team createTeam(Team team);
 
-    //选择团队
-    //修改团队信息
-    void modifyTeam(Team team);
+    //修改团队名称
+    //int updateTeamName(Team team,Integer userID);
 
     //添加团队成员
-    void addMember(User user);
+    int addMember(Integer TeamID,Integer memberID,Integer userID);
 
     //删除团队成员
-    void dropMember(User user);
+    int deleteMember(Integer TeamID,Integer memberID,Integer userID);
 
     //修改团队权限
-    void modifyPrivilege(Team team);
+    int changePrivilege(Team team,Integer userID);
+
+    //修改团队简介
+    int changeTeamInfo(Team team,Integer userID);
 
     //解散团队
-    void removeTeam(Team team);
+    int removeTeam(Team team,Integer userID);
+
+    //根据团队id查找团队
+    Team getTeamById(Integer id);
+
+    //根据团队名称选择团队
+    Team getTeamByName(String name);
+
+    //根据用户id查询所在团队
+    Team getTeamByUser(Integer userID);
+
+    int quitTeam(Integer TeamID,Integer UserID);
 }
