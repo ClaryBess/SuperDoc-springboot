@@ -133,7 +133,7 @@ public class DocController {
     public boolean checkPriShare(@PathVariable Integer DocID,@RequestBody Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
-        else if(docService.getDocById(DocID).getPrivilege()-(docService.getDocById(DocID).getPrivilege()/100)*10==1)
+        else if(docService.getDocById(DocID).getPrivilege()-(docService.getDocById(DocID).getPrivilege()/10)*10==1)
             return true;
         else
             return false;
@@ -141,16 +141,19 @@ public class DocController {
 
     @PostMapping("/doc/isEditable/{DocID}")
     public boolean isEditable(@PathVariable Integer DocID){
-        if(docService.getDocById(DocID).getEditable()==1){
+        if(docService.getDocById(DocID).getEditable()==0){
             return false;
         }
         else
             return true;
     }
 
+
     @PostMapping("/ doc/beginEdit/{DocID}")
     public CommonResult beginEdit(@PathVariable Integer DocID){
-        docService.getDocById(DocID).setEditable(1);
+        Document document=docService.getDocById(DocID);
+        document.setEditable(0);
+        docService.updateEdi(document);
         return new CommonResult(200,null,null);
     }
 

@@ -4,12 +4,30 @@ import java.util.Date;
 
 public class Team {
     private Integer TeamID;
+    private Integer UserID;
     private String TeamName;
     private Integer MemberNumber;
     private Integer Privilege;
     private Date DateTime;
+    private String TeamInfo;
 
-    public int getTeamID() {
+    public String getTeamInfo() {
+        return TeamInfo;
+    }
+
+    public void setTeamInfo(String teamInfo) {
+        TeamInfo = teamInfo;
+    }
+
+    public Integer getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(Integer userID) {
+        UserID = userID;
+    }
+
+    public Integer getTeamID() {
         return TeamID;
     }
 
@@ -25,7 +43,7 @@ public class Team {
         TeamName = teamName;
     }
 
-    public int getMemberNumber() {
+    public Integer getMemberNumber() {
         return MemberNumber;
     }
 
@@ -33,7 +51,7 @@ public class Team {
         MemberNumber = memberNumber;
     }
 
-    public int getPrivilege() {
+    public Integer getPrivilege() {
         return Privilege;
     }
 
