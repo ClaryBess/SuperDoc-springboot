@@ -147,12 +147,22 @@ public class DocController {
         else
             return true;
     }
-
+/*
     @PostMapping("/doc/beginEdit/{DocID}")
     public CommonResult beginEdit(@PathVariable Integer DocID){
         docService.getDocById(DocID).setEditable(0);
         return new CommonResult(200,null,null);
     }
+ */
+
+    @PostMapping("/doc/beginEdit/{DocID}")
+    public CommonResult beginEdit(@PathVariable Integer DocID){
+        Document document=docService.getDocById(DocID);
+        document.setEditable(0);
+        docService.updateEdi(document);
+        return new CommonResult(200,null,null);
+    }
+
 
     @RequestMapping(value = "/doc/edit",method = RequestMethod.POST)
     public CommonResult editDoc(@RequestBody Document document){
