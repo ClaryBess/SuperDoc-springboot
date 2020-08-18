@@ -1,9 +1,9 @@
 package com.example.test.bean;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class News {
-    private Integer NewsID;
+    public Integer NewsID;
     private Integer UserID;
     private Date DateTime;
     private Integer Type;
