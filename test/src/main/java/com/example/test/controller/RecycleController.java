@@ -2,8 +2,9 @@ package com.example.test.controller;
 
 import com.example.test.bean.CommonResult;
 import com.example.test.bean.Document;
-import com.example.test.service.DocService;
+import com.example.test.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,14 @@ public class RecycleController {
 
     @Autowired
     DocService docService;
+    @Autowired
+    BrowseService browseService;
+    @Autowired
+    CollectService collectService;
+    @Autowired
+    CommentService commentService;
+    @Autowired
+    EditService editService;
 
     @PostMapping("/recycle/getRecycle")
     public List<Document> getRecycle(@RequestBody Integer UserID){
@@ -33,14 +42,43 @@ public class RecycleController {
         }
     }
 
-    @PostMapping("/recycle/delete")
-    public CommonResult delete(@RequestBody Document document){
-        int flag = docService.deleteDocById(document.DocID,document.UserID);
+    @GetMapping("/recycle/deleteDoc")
+    public CommonResult deleteDoc(Document document){
+        Integer DocID = document.getDocID();
+        Document document1 = docService.getDocById(DocID);
+        if(document1 == null){
+            return new CommonResult(500,"cannot find the document!",null);
+        }
+        browseService.deleteBrowseByDoc(DocID);
+        collectService.deleteByDoc(DocID);
+        commentService.deleteByDoc(DocID);
+        editService.deleteByDoc(DocID);
+        int flag = docService.deleteDocById(DocID,document.getUserID());
         if(flag == 0){
-            return new CommonResult(400,"delete failure",null);
+            return new CommonResult(400,"failure!",null);
         }
         else{
-            return new CommonResult(200,"delete success",null);
+            return new CommonResult(200,"success!",null);
+        }
+    }
+
+    @PostMapping("/recycle/delete")
+    public CommonResult delete(@RequestBody Document document){
+        Integer DocID = document.DocID;
+        Document document1 = docService.getDocById(DocID);
+        if(document1 == null){
+            return new CommonResult(500,"cannot find the document",null);
+        }
+        browseService.deleteBrowseByDoc(DocID);
+        collectService.deleteByDoc(DocID);
+        commentService.deleteByDoc(DocID);
+        editService.deleteByDoc(DocID);
+        int flag = docService.deleteDocById(DocID,document.UserID);
+        if(flag == 0){
+            return new CommonResult(400,"failure",null);
+        }
+        else{
+            return new CommonResult(200,"success",null);
         }
     }
 

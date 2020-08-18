@@ -15,6 +15,9 @@ public interface DocumentMapper {
     @Select("select * from Document where UserID=#{UserID}")
     public List<Document> getDocByUser(Integer UserID);
 
+    @Select("select * from Document where UserID=#{UserID} and IsRecycle=0")
+    public List<Document> getExistDocByUser(Integer UserID);
+
     @Select("select * from Document where UserID=#{UserID} and IsRecycle=1")
     public List<Document> getRecycleByUser(Integer UserID);
 
@@ -39,6 +42,9 @@ public interface DocumentMapper {
 
     @Update("update Document set IsRecycle=0 where DocID=#{DocID}")
     public int recoverDoc(Integer DocID);
+
+    @Update("update Document set IsRecycle=1 where DocID=#{DocID}")
+    public int recycleDoc(Integer DocID);
 
     @Update("update Document set IsTeam=#{IsTeam},Team=#{Team} where DocID=#{DocID}")
     public int updateTea(Document document);

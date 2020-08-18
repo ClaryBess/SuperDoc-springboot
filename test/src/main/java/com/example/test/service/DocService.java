@@ -33,6 +33,10 @@ public class DocService {
         return documentMapper.getRecycleByUser(UserID);
     }
 
+    public List<Document> getExistDocByUser(Integer UserID){
+        return documentMapper.getExistDocByUser(UserID);
+    }
+
     //删除文档,只有创建者有权限
     public int deleteDocById(Integer docID,Integer userID){
         Document document = documentMapper.getDocById(docID);
@@ -63,11 +67,24 @@ public class DocService {
         return 0;
     }
 
+    //放到回收站
+    public int recycleDoc(Integer DocID,Integer UserID){
+        Document document = documentMapper.getDocById(DocID);
+        if(document == null){
+            return 2;
+        }
+        if(document.getUserID() == UserID){
+            documentMapper.recycleDoc(DocID);
+            return 0;
+        }
+        return 1;
+    }
+
+    //从回收站恢复
     public int recoverDoc(Integer DocID,Integer UserID){
         Document document = documentMapper.getDocById(DocID);
         if(document.getUserID() == UserID){
-            documentMapper.recoverDoc(DocID);
-            return 1;
+            return documentMapper.recoverDoc(DocID);
         }
         return 0;
     }
@@ -80,14 +97,6 @@ public class DocService {
             return 1;
         }
         return 0;
-    }
-
-    public int updateCon(Document document){
-        return documentMapper.updateCon(document);
-    }
-
-    public int updateTitle(Document document){
-        return documentMapper.updateTitle(document);
     }
 
     //修改编辑状态

@@ -6,6 +6,7 @@ import com.example.test.bean.Document;
 import com.example.test.service.CollectService;
 import com.example.test.service.DocService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class CreationController {
 
     @PostMapping("/created/getDocument")
     public List<Document> getDocument(@RequestBody Integer UserID){
-        return docService.getDocByUser(UserID);
+        return docService.getExistDocByUser(UserID);
     }
 
     @PostMapping("/created/collected")
@@ -59,12 +60,26 @@ public class CreationController {
         }
     }
 
-    @PostMapping("created/deleteDocument")
-    public CommonResult deleteDocument(@RequestBody Collect collect){
-        if(collect == null){
+    @GetMapping("created/delete")
+    public CommonResult delete(Collect collect){
+        if(collect == null || collect.getDocID() == null || collect.getUserID() == null){
             return new CommonResult(500,null,null);
         }
-        int flag = docService.deleteDocById(collect.DocID,collect.UserID);
+        int flag = docService.recycleDoc(collect.getDocID(),collect.getUserID());
+        if(flag == 2)
+            return new CommonResult(500,"document does not exist",null);
+        else if(flag == 1)
+            return new CommonResult(400,"you are not the creator",null);
+        else
+            return new CommonResult(200,"delete success",null);
+    }
+
+    @PostMapping("created/deleteDocument")
+    public CommonResult deleteDocument(@RequestBody Collect collect){
+        if(collect == null || collect.DocID == null || collect.UserID == null){
+            return new CommonResult(500,null,null);
+        }
+        int flag = docService.recycleDoc(collect.DocID,collect.UserID);
         if(flag == 0){
             return new CommonResult(400,"deleteDocument failure",null);
         }

@@ -36,6 +36,11 @@ public class BrowseService {
         return browseMapper.deleteBrowseByUser(UserID);
     }
 
+    //删除文档所有浏览记录
+    public int deleteBrowseByDoc(Integer DocID){
+        return browseMapper.deleteBrowseByDoc(DocID);
+    }
+
     public int deleteBrowseByDocAndUser(Integer DocID,Integer UserID){
         return browseMapper.deleteBrowseByDocAndUser(DocID, UserID);
     }

@@ -15,7 +15,7 @@ public interface BrowseMapper {
     public List<Browse> getBrowseByUser(Integer UserID);
 
     @Select("select * from Browse where DocID=#{DocID} and UserID=#{UserID}")
-    public Browse getBrowseByDocAndUser(Integer DocID,Integer UserID);
+    public Browse getBrowseByDocAndUser(Integer DocID, Integer UserID);
 
     @Options(useGeneratedKeys = true,keyProperty = "BrowseID")
     @Insert("insert into Browse(DocID,UserID) values(#{DocID},#{UserID})")
@@ -31,7 +31,7 @@ public interface BrowseMapper {
     public int deleteBrowseByUser(Integer UserID);
 
     @Delete("delete from Browse where DocID=#{DocID} and UserID=#{UserID}")
-    public int deleteBrowseByDocAndUser(Integer DocID,Integer UserID);
+    public int deleteBrowseByDocAndUser(Integer DocID, Integer UserID);
 
     @Update("update Browse set DateTime=now() where BrowseID=#{BrowseID}")
     public int updateDateTime(Integer BrowseID);
