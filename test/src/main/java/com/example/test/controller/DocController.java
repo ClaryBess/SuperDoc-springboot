@@ -147,13 +147,6 @@ public class DocController {
         else
             return true;
     }
-/*
-    @PostMapping("/doc/beginEdit/{DocID}")
-    public CommonResult beginEdit(@PathVariable Integer DocID){
-        docService.getDocById(DocID).setEditable(0);
-        return new CommonResult(200,null,null);
-    }
- */
 
     public CommonResult beginEdit(@PathVariable Integer DocID){
         Document document=docService.getDocById(DocID);

@@ -50,7 +50,7 @@ public class TeamController {
 //    @PostMapping("/team/1/delete/{TeamID}")
 //    public Team deleteMember(@PathVariable Integer TeamID,@RequestBody Integer UserID){
 //        Team team1 = teamService.getTeamById(TeamID);
-//        teamService.deleteMember(TeamId,memberId,userId);
+//        teamService.deleteMember();
 //        return team1;
 //    }
 
