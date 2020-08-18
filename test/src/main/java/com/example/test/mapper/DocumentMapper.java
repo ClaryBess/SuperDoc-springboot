@@ -24,6 +24,9 @@ public interface DocumentMapper {
     @Delete("delete from Document where DocID=#{DocID}")
     public int deleteDocById(Integer DocID);
 
+    @Delete("delete from Document where UserID=#{UserID} and IsRecycle=1")
+    public int deleteAllRecycle(Integer UserID);
+
     @Options(useGeneratedKeys = true,keyProperty = "DocID")
     @Insert("insert into Document(UserID,Title,Content,Privilege,IsTeam,Team,RecycleDateTime) values(#{UserID},#{Title},#{Content},#{Privilege},#{IsTeam},#{Team},#{RecycleDateTime})")
     public int insertDoc(Document document);

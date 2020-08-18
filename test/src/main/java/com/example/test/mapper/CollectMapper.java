@@ -22,7 +22,7 @@ public interface CollectMapper {
 
     @Options(useGeneratedKeys = true,keyProperty = "CollectID")
     @Insert("insert into Collect(UserID,DocID) values(#{UserID},#{DocID})")
-    public int insertCollect(Integer DocID, Integer UserID);
+    public int insertCollect(Collect collect);
 
     @Delete("delete from Collect where CollectID=#{CollectID}")
     public int deleteById(Integer CollectID);

@@ -42,6 +42,7 @@ public class RecycleController {
         }
     }
 
+    //这是后端用来测试的
     @GetMapping("/recycle/deleteDoc")
     public CommonResult deleteDoc(Document document){
         Integer DocID = document.getDocID();
@@ -82,4 +83,48 @@ public class RecycleController {
         }
     }
 
+    @PostMapping("/recycle/deleteAll")
+    public CommonResult deleteAll(@RequestBody Integer UserID){
+        if(UserID == null){
+            return new CommonResult(500,"UserID is null",null);
+        }
+        List<Document> documentList = docService.getAllRecycle(UserID);
+        if(documentList == null || documentList.size() == 0){
+            return new CommonResult(400,"no document to delete",null);
+        }
+        for(Document document : documentList){
+            Integer DocID = document.getDocID();
+
+            browseService.deleteBrowseByDoc(DocID);
+            collectService.deleteByDoc(DocID);
+            commentService.deleteByDoc(DocID);
+            editService.deleteByDoc(DocID);
+
+            docService.deleteDocById(DocID,UserID);
+        }
+        return new CommonResult(200,"success",null);
+    }
+
+    //这是后端用来测试的
+    @GetMapping("/recycle/deleteAllRecycle")
+    public CommonResult deleteAllRecycle(Integer UserID){
+        if(UserID == null){
+            return new CommonResult(500,"UserID is null!",null);
+        }
+        List<Document> documentList = docService.getAllRecycle(UserID);
+        if(documentList == null || documentList.size() == 0){
+            return new CommonResult(400,"no document to delete!",null);
+        }
+        for(Document document : documentList){
+            Integer DocID = document.getDocID();
+            System.out.println("现在删除依赖");
+            browseService.deleteBrowseByDoc(DocID);
+            collectService.deleteByDoc(DocID);
+            commentService.deleteByDoc(DocID);
+            editService.deleteByDoc(DocID);
+            System.out.println("现在删除文档"+DocID);
+            docService.deleteDocById(DocID,UserID);
+        }
+        return new CommonResult(200,"success!",null);
+    }
 }
