@@ -46,5 +46,4 @@ public class NewsController {
             return new CommonResult(200,"success",null);
         }
     }
-
 }

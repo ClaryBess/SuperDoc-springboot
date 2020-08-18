@@ -1,7 +1,7 @@
 package com.example.test.controller;
 
 import com.example.test.bean.*;
-import com.example.test.mapper.TeamMapper;
+import com.example.test.service.DocService;
 import com.example.test.service.TeamService;
 import com.example.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,8 @@ public class TeamController {
     TeamService teamService;
     @Autowired
     UserService userService;
+    @Autowired
+    DocService docService;
 
 
     @PostMapping("/team/addTeam")
@@ -51,8 +53,9 @@ public class TeamController {
     }
 
     @PostMapping("/team/quit/{TeamID}")
-    public CommonResult quit(@PathVariable("TeamID") Integer TeamID, @RequestBody Integer UserID) {
-        teamService.deleteByTeamAndUser(TeamID, UserID);
+    public CommonResult quit(@PathVariable("TeamID") Integer TeamID, @RequestBody String UserName) {
+
+        teamService.deleteByTeamAndUser(TeamID, userService.getUserByName(UserName).getUserID());
         return new CommonResult(200, null, null);
     }
 
@@ -92,16 +95,24 @@ public class TeamController {
         List<Member> members=teamService.getMemberByTeam(TeamID);
         List<MemberShow> memberShows=new ArrayList<>();
         for(Member member:members){
-            memberShows.add(new MemberShow(userService.getUserById(member.getUserID()).getProfileUrl(),userService.getUserById(member.getUserID()).getUserName());
+            memberShows.add(new MemberShow(userService.getUserById(member.getUserID()).getProfileUrl(),userService.getUserById(member.getUserID()).getUserName()));
         }
         return memberShows;
     }
 
+    @PostMapping("/team/getDoc/{TeamID}")
+    public List<Document> getDoc(@PathVariable("TeamID") Integer TeamID){
+        return docService.getTeamDoc(TeamID);
+    }
 
-//    @PostMapping("/team/1/delete/{TeamID}")
-//    public Team deleteMember(@PathVariable Integer TeamID,@RequestBody Integer UserID){
-//        Team team1 = teamService.getTeamById(TeamID);
-//        teamService.deleteMember();
-//        return team1;
-//    }
+    @PostMapping("/team/deleteDoc/{TeamID}")
+    public CommonResult deleteDoc(@PathVariable("TeamID") Integer TeamID,@RequestBody Integer DocID){
+        Document document=docService.getDocById(DocID);
+        if(document.getTeam()==TeamID&document.getIsTeam()==1){
+            docService.deleteDocById(DocID,document.getUserID());
+            return new CommonResult(200,null,null);
+        }else {
+            return new CommonResult(500,"Not a team document!",null);
+        }
+    }
 }

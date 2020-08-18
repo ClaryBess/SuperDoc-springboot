@@ -36,6 +36,9 @@ public class DocService {
     public List<Document> getExistDocByUser(Integer UserID){
         return documentMapper.getExistDocByUser(UserID);
     }
+    public  List<Document> getTeamDoc(Integer TeamID){
+        return documentMapper.getTeamDoc(TeamID);
+    }
 
     //删除文档,只有创建者有权限
     public int deleteDocById(Integer docID,Integer userID){

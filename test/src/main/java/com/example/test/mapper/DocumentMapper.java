@@ -21,6 +21,9 @@ public interface DocumentMapper {
     @Select("select * from Document where UserID=#{UserID} and IsRecycle=1 order by DateTime desc")
     public List<Document> getRecycleByUser(Integer UserID);
 
+    @Select("select * from Document where TeamID=#{TeamID} and IsTeam=1 order by DateTime desc")
+    public List<Document> getTeamDoc(Integer TeamID);
+
     @Delete("delete from Document where DocID=#{DocID}")
     public int deleteDocById(Integer DocID);
 
