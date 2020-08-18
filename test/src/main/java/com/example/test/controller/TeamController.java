@@ -17,8 +17,8 @@ public class TeamController {
     @Autowired
     TeamMapper teamMapper;
 
-    @GetMapping("/team")
-    public Team createTeam()
+    //@GetMapping("/team")
+    //public Team createTeam()
 
     @GetMapping("/team/{TeamID}")
     public Team getTeam(@PathVariable("TeamID") Integer TeamID){
