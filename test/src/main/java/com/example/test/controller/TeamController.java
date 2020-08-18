@@ -92,7 +92,7 @@ public class TeamController {
         List<Member> members=teamService.getMemberByTeam(TeamID);
         List<MemberShow> memberShows=new ArrayList<>();
         for(Member member:members){
-            memberShows.add(new MemberShow(userService.getUserById(member.getUserID()).getProfileUrl(),userService.getUserById(member.getUserID()).getUserName());
+            memberShows.add(new MemberShow(userService.getUserById(member.getUserID()).getProfileUrl(),userService.getUserById(member.getUserID()).getUserName()));
         }
         return memberShows;
     }
