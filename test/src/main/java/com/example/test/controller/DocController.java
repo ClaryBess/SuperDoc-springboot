@@ -141,16 +141,16 @@ public class DocController {
 
     @PostMapping("/doc/isEditable/{DocID}")
     public boolean isEditable(@PathVariable Integer DocID){
-        if(docService.getDocById(DocID).getEditable()==1){
+        if(docService.getDocById(DocID).getEditable()==0){
             return false;
         }
         else
             return true;
     }
 
-    @PostMapping("/ doc/beginEdit/{DocID}")
+    @PostMapping("/doc/beginEdit/{DocID}")
     public CommonResult beginEdit(@PathVariable Integer DocID){
-        docService.getDocById(DocID).setEditable(1);
+        docService.getDocById(DocID).setEditable(0);
         return new CommonResult(200,null,null);
     }
 
