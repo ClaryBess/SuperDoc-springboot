@@ -1,6 +1,7 @@
 package com.example.test.controller;
 
 import com.example.test.bean.CommonResult;
+import com.example.test.bean.Member;
 import com.example.test.bean.Team;
 import com.example.test.bean.TeamShow;
 import com.example.test.mapper.TeamMapper;
@@ -64,8 +65,20 @@ public class TeamController {
         return new CommonResult(200,null,null);
     }
 
-//    @PostMapping("/team/updateInfo/{TeamID}")
-//    public CommonResult updateInfo(@PathVariable)
+    @PostMapping("/team/updateInfo/{TeamID}")
+    public CommonResult updateInfo(@PathVariable("TeamID")Integer TeamID,@RequestBody String TeamInfo){
+        teamService.updateInfo(teamService.getTeamById(TeamID));
+        return new CommonResult(200,null,null);
+    }
+
+    @PostMapping("/team/addMember")
+    public CommonResult addMember(@RequestBody Member member){
+        if(member.getUserID()==teamService.getTeamById(member.getTeamID()).getUserID()){
+            return new CommonResult(500,"Leader can't be added as a member!",null);
+        }
+        Member result=teamService.insertMember(member);
+        return new CommonResult(200,null,result);
+    }
 
 //    @PostMapping("/team/1/update/info")
 //    public Team updateTeamInfo(@RequestBody String TeamInfo, Integer userId, Integer TeamId){

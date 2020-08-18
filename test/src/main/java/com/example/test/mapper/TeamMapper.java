@@ -41,10 +41,11 @@ public interface TeamMapper {
     @Select("select * from Team where TeamID=#{id}")
     public Team getTeamById(Integer id);
 
+    //根据创建者查找团队
+    @Select("select * from Team where UserID=#{UserID}")
+    public List<Team> getTeamByUser(Integer UserID);
+
     //根据名称查找团队
     @Select("select * from Team where TeamName=#{name}")
     public Team getTeamByName(String name);
-
-    @Select("select * from Team where UserID=#{id}")
-    public List<Team> getTeamByUser(Integer id);
 }

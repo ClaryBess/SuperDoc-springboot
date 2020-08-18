@@ -82,13 +82,9 @@ public class TeamService{
         return 0;
     }
 
-    public int updateInfo(Team team,Integer userID){
-        Team team1 = teamMapper.getTeamById(team.getTeamID());
-        if(team1.getUserID() == userID){
+    public int updateInfo(Team team){
             teamMapper.updateInf(team);
             return 1;
-        }
-        return 0;
     }
 
     public Team getTeamById(Integer id){
@@ -100,21 +96,24 @@ public class TeamService{
     }
 
     public List<Team> getTeamByUser(Integer UserID){
-        List<Team> teams2=new ArrayList<>();
-//        List<Team> teams = new ArrayList<Team>();
-//        List<Member> members = memberMapper.getMemberByUser(UserID);
-//        if(members == null || members.size() == 0){
-//            return null;
-//        }
-//        for(Member member : members){
-//            Integer TeamID = member.getTeamID();
-//            Team team = teamMapper.getTeamById(TeamID);
-//            teams.add(team);
-//        }
-        teams2=teamMapper.getTeamByUser(UserID);
-        System.out.println(teams2.get(0).toString());
-        //teams2.addAll(teams);
-        return teams2;
+
+        List<Team> teams = new ArrayList<Team>();
+        List<Member> members = memberMapper.getMemberByUser(UserID);
+        if(members == null || members.size() == 0){
+            return null;
+        }
+        for(Member member : members){
+            Integer TeamID = member.getTeamID();
+            Team team = teamMapper.getTeamById(TeamID);
+            teams.add(team);
+        }
+        List<Team> teams1 = teamMapper.getTeamByUser(UserID);
+        if(teams != null && teams.size() > 0){
+            for(Team team : teams){
+                teams1.add(team);
+            }
+        }
+        return teams1;
     }
 
 }
