@@ -29,9 +29,11 @@ public class TeamService{
         Integer UserID = team.getUserID();
         User user = userMapper.getUserById(UserID);;
         if(UserID != null && user == null){
+            System.out.println("in");
             return null;
         }
         teamMapper.insertTeam(team);
+        System.out.println(teamMapper.getTeamById(team.getTeamID()).toString());
         return teamMapper.getTeamById(team.getTeamID());
     }
 
@@ -98,17 +100,21 @@ public class TeamService{
     }
 
     public List<Team> getTeamByUser(Integer UserID){
-        List<Team> teams = new ArrayList<Team>();
-        List<Member> members = memberMapper.getMemberByUser(UserID);
-        if(members == null || members.size() == 0){
-            return null;
-        }
-        for(Member member : members){
-            Integer TeamID = member.getTeamID();
-            Team team = teamMapper.getTeamById(TeamID);
-            teams.add(team);
-        }
-        return teams;
+        List<Team> teams2=new ArrayList<>();
+//        List<Team> teams = new ArrayList<Team>();
+//        List<Member> members = memberMapper.getMemberByUser(UserID);
+//        if(members == null || members.size() == 0){
+//            return null;
+//        }
+//        for(Member member : members){
+//            Integer TeamID = member.getTeamID();
+//            Team team = teamMapper.getTeamById(TeamID);
+//            teams.add(team);
+//        }
+        teams2=teamMapper.getTeamByUser(UserID);
+        System.out.println(teams2.get(0).toString());
+        //teams2.addAll(teams);
+        return teams2;
     }
 
 }

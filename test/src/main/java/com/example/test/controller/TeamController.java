@@ -26,12 +26,12 @@ public class TeamController {
     UserService userService;
 
 
-    //@GetMapping("/team")
-    //public Team createTeam()
-
     @PostMapping("/team/addTeam")
     public CommonResult addTeam(@RequestBody Team team){
-        return new CommonResult(200,null,teamService.insertTeam(team));
+        System.out.println(team.getUserID());
+        System.out.println(team.getTeamName());
+        Team result=teamService.insertTeam(team);
+        return new CommonResult(200,null,result);
     }
 
 
@@ -43,6 +43,8 @@ public class TeamController {
     @PostMapping("/team/inTeams")
     public List<TeamShow> inTeams(@RequestBody Integer UserID){
         List<Team> teams=teamService.getTeamByUser(UserID);
+        if(teams==null)
+            return null;
         List<TeamShow> teamShows=new ArrayList<>();
         for(Team team:teams){
             teamShows.add(new TeamShow(team.getTeamID(),UserID,team.getTeamName(),userService.getUserById(UserID).getUserName()));

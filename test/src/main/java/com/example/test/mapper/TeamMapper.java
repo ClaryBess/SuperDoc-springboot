@@ -3,6 +3,8 @@ package com.example.test.mapper;
 import com.example.test.bean.Team;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface TeamMapper {
 
@@ -43,4 +45,6 @@ public interface TeamMapper {
     @Select("select * from Team where TeamName=#{name}")
     public Team getTeamByName(String name);
 
+    @Select("select * from Team where UserID=#{id}")
+    public List<Team> getTeamByUser(Integer id);
 }
