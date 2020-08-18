@@ -109,6 +109,14 @@ public class DocService {
         return documentMapper.updateEdi(document);
     }
 
+    public int updateCon(Document document){
+        return documentMapper.updateCon(document);
+    }
+
+    public int updateTitle(Document document){
+        return documentMapper.updateTitle(document);
+    }
+
     //文档被评论
     public int commentDoc(Document document){
         return documentMapper.commentDoc(document.getDocID());

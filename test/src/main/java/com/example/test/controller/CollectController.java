@@ -68,6 +68,7 @@ public class CollectController {
         }
     }
 
+    @PostMapping("/collect/collectNum")
     public int getCollectNumber(@RequestBody Integer DocID){
         return collectService.getSum(DocID);
     }
