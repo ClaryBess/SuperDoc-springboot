@@ -83,6 +83,7 @@ public class TeamService{
     }
 
     public int updateInfo(Team team){
+
             teamMapper.updateInf(team);
             return 1;
     }
