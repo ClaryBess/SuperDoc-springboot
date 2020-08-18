@@ -1,11 +1,14 @@
 package com.example.test.controller;
 
+import com.example.test.bean.Comment;
+import com.example.test.bean.CommentShow;
 import com.example.test.bean.CommonResult;
 import com.example.test.bean.Edit;
 import com.example.test.service.EditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,15 +22,8 @@ public class EditController {
         return editService.getEditByUser(UserID);
     }
 
-    @GetMapping("/edit")
-    public Edit insertEdit(Edit edit){
-        return editService.insertEdit(edit);
+    @PostMapping("/edit/get/{DocID}")
+    public List<Edit> getEditList(@PathVariable Integer DocID){
+        return editService.getEditByDoc(DocID);
     }
-
-    @PostMapping("/edit/add")
-    public CommonResult addEdit(@RequestBody Edit edit){
-        Edit result=editService.insertEdit(edit);
-        return new CommonResult(200,null,result);
-    }
-
 }

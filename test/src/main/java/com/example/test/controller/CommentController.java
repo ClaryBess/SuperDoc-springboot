@@ -1,14 +1,17 @@
 package com.example.test.controller;
 
 import com.example.test.bean.Comment;
+import com.example.test.bean.CommentShow;
 import com.example.test.bean.CommonResult;
 import com.example.test.bean.Document;
 import com.example.test.service.CommentService;
+import com.example.test.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,6 +19,8 @@ public class CommentController {
 
     @Autowired
     CommentService commentService;
+
+    UserService userService;
 
     @GetMapping("/comment")
     public Comment insertComment(Comment comment){
@@ -33,8 +38,12 @@ public class CommentController {
     }
 
     @PostMapping("/comment/commentList/{DocID}")
-    public List<Comment> getCommentList(@PathVariable Integer DocID){
+    public List<CommentShow> getCommentList(@PathVariable Integer DocID){
         List<Comment> result=commentService.getCommentByDoc(DocID);
-        return result;
+        List<CommentShow> commentShows=new ArrayList<>();
+        for(Comment comment:result){
+            commentShows.add(new CommentShow(userService.getUserById(comment.getUserID()).getProfileUrl(),userService.getUserById(comment.getUserID()).getUserName(),comment.getContent(),comment.getDateTime()));
+        }
+        return commentShows;
     }
 }

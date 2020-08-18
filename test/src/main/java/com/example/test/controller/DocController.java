@@ -2,8 +2,10 @@ package com.example.test.controller;
 
 import com.example.test.bean.CommonResult;
 import com.example.test.bean.Document;
+import com.example.test.bean.Edit;
 import com.example.test.mapper.DocumentMapper;
 import com.example.test.service.DocService;
+import com.example.test.service.EditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,8 @@ public class DocController {
     DocumentMapper documentMapper;
     @Autowired
     DocService docService;
+
+    EditService editService;
 
 
     @GetMapping("/doc/user/{UserID}")
@@ -89,6 +93,7 @@ public class DocController {
         return new CommonResult(200,null,docService.getDocById(DocID));
     }
 
+
     @PostMapping("/doc/checkPriView/{DocID}")
     public boolean checkPriView(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
@@ -99,8 +104,10 @@ public class DocController {
             return false;
     }
 
+
+
     @PostMapping("/doc/checkPriEdit/{DocID}")
-    public boolean checkPriEdit(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
+    public boolean checkPriEdit(@PathVariable Integer DocID,@RequestBody Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
         else if(docService.getDocById(DocID).getPrivilege()/100==1)
@@ -110,7 +117,7 @@ public class DocController {
     }
 
     @PostMapping("/doc/checkPriComment/{DocID}")
-    public boolean checkPriComment(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
+    public boolean checkPriComment(@PathVariable Integer DocID,@RequestBody Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
         else if(docService.getDocById(DocID).getPrivilege()/10==1)
@@ -120,12 +127,39 @@ public class DocController {
     }
 
     @PostMapping("/doc/checkPriShare/{DocID}")
-    public boolean checkPriShare(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
+    public boolean checkPriShare(@PathVariable Integer DocID,@RequestBody Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
         else if(docService.getDocById(DocID).getPrivilege()==1)
             return true;
         else
             return false;
+    }
+
+    @PostMapping("/doc/isEditable")
+    public boolean isEditable(@PathVariable Integer DocID){
+        if(docService.getDocById(DocID).getEditable()==1){
+            return false;
+        }
+        else
+            return true;
+    }
+
+    @PostMapping("/ doc/beginEdit/{DocID}")
+    public CommonResult beginEdit(@PathVariable Integer DocID){
+        docService.getDocById(DocID).setEditable(1);
+        return new CommonResult(200,null,null;
+    }
+
+    @RequestMapping(value = "/doc/edit",method = RequestMethod.POST)
+    public CommonResult editDoc(@RequestBody Document document){
+        docService.updatePri(document,document.UserID);
+        docService.updateEdi(document);
+        docService.updateCon(document);
+        Edit edit=new Edit();
+        edit.setDocID(document.DocID);
+        edit.setUserID(document.UserID);
+        editService.insertEdit(edit);
+        return new CommonResult(200,null,null);
     }
 }

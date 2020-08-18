@@ -82,6 +82,10 @@ public class DocService {
         return 0;
     }
 
+    public int updateCon(Document document){
+        return documentMapper.updateCon(document);
+    }
+
     //修改编辑状态
     public int updateEdi(Document document){
         return documentMapper.updateEdi(document);
