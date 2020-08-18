@@ -78,17 +78,17 @@ public class TeamController {
     }
 
     @PostMapping("/team/getInfo/{TeamID}")
-    public String getInfo(@RequestBody Integer TeamID) {
+    public String getInfo(@PathVariable("TeamID") Integer TeamID) {
         return teamService.getTeamById(TeamID).getTeamInfo();
     }
 
     @PostMapping("/team/getUser/{TeamID}")
-    public MemberShow getUser(@RequestBody Integer TeamID) {
+    public MemberShow getUser(@PathVariable("TeamID") Integer TeamID) {
         User user=userService.getUserById(teamService.getTeamById(TeamID).getUserID());
         return new MemberShow(user.getProfileUrl(),user.getUserName());
     }
     @PostMapping("/team/getMember/{TeamID}")
-    public List<MemberShow> getMember(@RequestBody Integer TeamID) {
+    public List<MemberShow> getMember(@PathVariable("TeamID") Integer TeamID) {
         List<Member> members=teamService.getMemberByTeam(TeamID);
         List<MemberShow> memberShows=new ArrayList<>();
         for(Member member:members){
