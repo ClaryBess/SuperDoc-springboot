@@ -19,7 +19,7 @@ public class CommentController {
 
     @Autowired
     CommentService commentService;
-
+@Autowired
     UserService userService;
 
     @GetMapping("/comment")
@@ -29,7 +29,6 @@ public class CommentController {
 
     @PostMapping("/comment/add")
     public CommonResult addComment(@RequestBody Comment comment){
-        comment.setDateTime((Date) new java.util.Date());
         Comment result=commentService.insertComment(comment);
         if(result!=null)
             return new CommonResult(200,null,result);

@@ -18,7 +18,7 @@ public class DocController {
     DocumentMapper documentMapper;
     @Autowired
     DocService docService;
-
+    @Autowired
     EditService editService;
 
 
@@ -136,7 +136,7 @@ public class DocController {
             return false;
     }
 
-    @PostMapping("/doc/isEditable")
+    @PostMapping("/doc/isEditable/{DocID}")
     public boolean isEditable(@PathVariable Integer DocID){
         if(docService.getDocById(DocID).getEditable()==1){
             return false;
