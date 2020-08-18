@@ -24,7 +24,7 @@ public interface NewsMapper {
 
     //修改已读状态
     @Update("update News set IsRead=1 where NewsID=#{NewsID}")
-    public int changeNewsIsRead(News news);
+    public int updateRead(Integer NewsID);
 
     //根据NewsID查看消息
     @Select("select * from News where NewsID=#{NewsID}")
