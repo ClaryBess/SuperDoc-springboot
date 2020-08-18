@@ -101,7 +101,7 @@ public class DocController {
     public boolean checkPriView(@PathVariable Integer DocID,@RequestParam(name="userID")Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
-        else if(docService.getDocById(DocID).getPrivilege()/1000==1)
+        else if(docService.getDocById(DocID).getPrivilege()%1000==1)
             return true;
         else
             return false;
@@ -113,7 +113,7 @@ public class DocController {
     public boolean checkPriEdit(@PathVariable Integer DocID,@RequestBody Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
-        else if(docService.getDocById(DocID).getPrivilege()/100==1)
+        else if(docService.getDocById(DocID).getPrivilege()%100-(docService.getDocById(DocID).getPrivilege()%1000)*10==1)
             return true;
         else
             return false;
@@ -123,7 +123,7 @@ public class DocController {
     public boolean checkPriComment(@PathVariable Integer DocID,@RequestBody Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
-        else if(docService.getDocById(DocID).getPrivilege()/10==1)
+        else if(docService.getDocById(DocID).getPrivilege()/10-(docService.getDocById(DocID).getPrivilege()%100)*10==1)
             return true;
         else
             return false;
@@ -133,7 +133,7 @@ public class DocController {
     public boolean checkPriShare(@PathVariable Integer DocID,@RequestBody Integer UserID){
         if(UserID==docService.getDocById(DocID).getUserID())
             return true;
-        else if(docService.getDocById(DocID).getPrivilege()==1)
+        else if(docService.getDocById(DocID).getPrivilege()-(docService.getDocById(DocID).getPrivilege()%100)*10==1)
             return true;
         else
             return false;
