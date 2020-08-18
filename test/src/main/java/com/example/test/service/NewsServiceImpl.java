@@ -37,20 +37,20 @@ public class NewsServiceImpl implements NewsService {
         return news;
     }
 
-    /**
-     * 将消息设置为已读
-     * @param NewsID
-     */
     @Override
-    public void ReadNews(Integer NewsID){
-        newsMapper.changeNewsIsRead(NewsID);
+    public News ReadNews(News news){
+        if(news == null || news.getNewsID() == null || news.getUserID() == null){
+            return null;
+        }
+        newsMapper.changeNewsIsRead(news);
+        return newsMapper.SelectNewsByNewsId(news.getNewsID());
     }
-    /**
-     * 查看所有信息
-     * @param UserID
-     * @return
-     */
-   //public List<News> ViewAllNews(int UserID)
 
+    public int deleteById(News news){
+        if(news == null || news.getNewsID() == null){
+            return 0;
+        }
+        return newsMapper.deleteById(news);
+    }
 
 }

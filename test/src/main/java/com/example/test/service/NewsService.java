@@ -14,7 +14,7 @@ public interface NewsService {
     List<News> ViewNewsByUserId(Integer UserID);
 
     //修改已读状态
-    void ReadNews(Integer NewsID);
+    News ReadNews(News news);
 
     //查看所有信息
     //List<News> ViewAllNews(int UserID);
