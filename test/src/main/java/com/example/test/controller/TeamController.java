@@ -51,8 +51,8 @@ public class TeamController {
     }
 
     @PostMapping("/team/quit/{TeamID}")
-    public CommonResult quit(@PathVariable("TeamID") Integer TeamID, @RequestBody Integer UserID) {
-        teamService.deleteByTeamAndUser(TeamID, UserID);
+    public CommonResult quit(@PathVariable("TeamID") Integer TeamID, @RequestBody String UserName) {
+        teamService.deleteByTeamAndUser(TeamID, userService.getUserByName(UserName).getUserID());
         return new CommonResult(200, null, null);
     }
 
@@ -64,7 +64,9 @@ public class TeamController {
 
     @PostMapping("/team/updateInfo/{TeamID}")
     public CommonResult updateInfo(@PathVariable("TeamID") Integer TeamID, @RequestBody String TeamInfo) {
-        teamService.updateInfo(teamService.getTeamById(TeamID));
+        Team team=teamService.getTeamById(TeamID);
+        team.setTeamInfo(TeamInfo);
+        teamService.updateInfo(team);
         return new CommonResult(200, null, null);
     }
 
