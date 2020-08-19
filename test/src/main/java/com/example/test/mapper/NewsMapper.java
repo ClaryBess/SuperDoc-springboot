@@ -27,12 +27,12 @@ public interface NewsMapper {
     public int updateRead(Integer NewsID);
 
     //根据NewsID查看消息
-    @Select("select * from News where NewsID=#{NewsID} order by DateTime desc")
+    @Select("select * from News where NewsID=#{NewsID}")
     News getNewsByNewsId(Integer NewsID);
 
     //根据UserID查看消息
-    @Select("select * from News where UserID=#{UserID}")
-    List<News> SelectNewsByUserId(Integer UserID);
+    @Select("select * from News where UserID=#{UserID} order by DateTime desc")
+    List<News> getNewsByUserId(Integer UserID);
 
     @Delete("delete from News where NewsID=#{NewsID}")
     public int deleteById(News news);

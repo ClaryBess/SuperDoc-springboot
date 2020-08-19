@@ -19,7 +19,7 @@ public class NewsService {
     }
 
     public List<News> getNewsByUserId(Integer UserID){
-        List<News> news = newsMapper.SelectNewsByUserId(UserID);
+        List<News> news = newsMapper.getNewsByUserId(UserID);
         return news;
     }
 
