@@ -139,6 +139,11 @@ public class UserController {
         }
     }
 
+    @PostMapping("/user/getUser")
+    public User getUser(@RequestBody Integer UserID){
+        return userService.getUserById(UserID);
+    }
+
     @PostMapping("/user/getName/{UserID}")
     public String getName(@PathVariable Integer UserID){
         return  userService.getUserById(UserID).getUserName();
