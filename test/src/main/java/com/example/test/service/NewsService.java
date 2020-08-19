@@ -14,7 +14,7 @@ public class NewsService {
     NewsMapper newsMapper;
 
     public News getNewsByNewsId(Integer NewsID){
-        News news = newsMapper.SelectNewsByNewsId(NewsID);
+        News news = newsMapper.getNewsByNewsId(NewsID);
         return news;
     }
 

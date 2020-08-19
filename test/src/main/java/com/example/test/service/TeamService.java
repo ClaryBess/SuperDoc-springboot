@@ -6,6 +6,7 @@ import com.example.test.bean.User;
 import com.example.test.mapper.MemberMapper;
 import com.example.test.mapper.TeamMapper;
 import com.example.test.mapper.UserMapper;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,6 +97,10 @@ public class TeamService{
         return teamMapper.getTeamByName(name);
     }
 
+    public List<Team> getCreateTeamByUser(Integer UserID){
+        return teamMapper.getTeamByUser(UserID);
+    }
+
     public List<Team> getTeamByUser(Integer UserID){
         List<Team> teams1 = teamMapper.getTeamByUser(UserID);
         List<Team> teams = new ArrayList<Team>();
@@ -112,7 +117,24 @@ public class TeamService{
                 }
             }
         }
+<<<<<<< HEAD
+        for(Member member : members){
+            Integer TeamID = member.getTeamID();
+            Team team = teamMapper.getTeamById(TeamID);
+            teams.add(team);
+        }
+
+        List<Team> teams1 = teamMapper.getTeamByUser(UserID);
+        if(teams1 != null && teams1.size() > 0){
+            for(Team team : teams1){
+                teams.add(team);
+            }
+        }
+
+        return teams;
+=======
         return teams1;
+>>>>>>> a984804677a998d0f9904fad82e9c41c0b206f1e
     }
 
     public List<Member> getMemberByTeam(Integer TeamID){

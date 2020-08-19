@@ -27,8 +27,8 @@ public interface NewsMapper {
     public int updateRead(Integer NewsID);
 
     //根据NewsID查看消息
-    @Select("select * from News where NewsID=#{NewsID}")
-    News SelectNewsByNewsId(Integer NewsID);
+    @Select("select * from News where NewsID=#{NewsID} order by DateTime desc")
+    News getNewsByNewsId(Integer NewsID);
 
     //根据UserID查看消息
     @Select("select * from News where UserID=#{UserID}")
