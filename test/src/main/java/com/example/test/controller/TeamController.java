@@ -1,10 +1,7 @@
 package com.example.test.controller;
 
 import com.example.test.bean.*;
-import com.example.test.service.DocService;
-import com.example.test.service.MemberService;
-import com.example.test.service.TeamService;
-import com.example.test.service.UserService;
+import com.example.test.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +24,14 @@ public class TeamController {
     MemberService memberService;
     @Autowired
     DocService docService;
+    @Autowired
+    BrowseService browseService;
+    @Autowired
+    CollectService collectService;
+    @Autowired
+    CommentService commentService;
+    @Autowired
+    EditService editService;
 
 
     @PostMapping("/team/addTeam")
@@ -122,11 +127,20 @@ public class TeamController {
     @PostMapping("/team/deleteDoc/{TeamID}")
     public CommonResult deleteDoc(@PathVariable("TeamID") Integer TeamID,@RequestBody Integer DocID){
         Document document=docService.getDocById(DocID);
-        if(document.getTeam()==TeamID&document.getIsTeam()==1){
-            docService.deleteDocById(DocID,document.getUserID());
-            return new CommonResult(200,null,null);
-        }else {
-            return new CommonResult(500,"Not a team document!",null);
+        if(document == null){
+            return new CommonResult(500,"cannot find the document",null);
+        }
+        else {
+            browseService.deleteBrowseByDoc(DocID);
+            collectService.deleteByDoc(DocID);
+            commentService.deleteByDoc(DocID);
+            editService.deleteByDoc(DocID);
+            if(document.getTeam()==TeamID && document.getIsTeam()==1){
+                docService.deleteDocById(DocID,document.getUserID());
+                return new CommonResult(200,null,null);
+            }else {
+                return new CommonResult(500,"Not a team document!",null);
+            }
         }
     }
 }
