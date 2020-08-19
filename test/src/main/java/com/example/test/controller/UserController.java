@@ -144,6 +144,11 @@ public class UserController {
         return userService.getUserById(UserID);
     }
 
+    @PostMapping("/user/getUserByName")
+    public User getUserByName(@RequestBody String UserName){
+        return userService.getUserByName(UserName);
+    }
+
     @PostMapping("/user/getName/{UserID}")
     public String getName(@PathVariable Integer UserID){
         return  userService.getUserById(UserID).getUserName();
