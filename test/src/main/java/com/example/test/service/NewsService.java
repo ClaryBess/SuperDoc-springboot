@@ -37,4 +37,12 @@ public class NewsService {
         return newsMapper.deleteById(news);
     }
 
+    public News insertNews(News news){
+        if(news==null||news.getUserID()==null||news.getType()==null||news.getContent()==null){
+            return  null;
+        }
+        newsMapper.CreateNews(news);
+        return newsMapper.getNewsByNewsId(news.getNewsID());
+    }
+
 }

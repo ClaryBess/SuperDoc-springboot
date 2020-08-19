@@ -3,12 +3,13 @@ package com.example.test.controller;
 import com.example.test.bean.CommonResult;
 import com.example.test.bean.News;
 import com.example.test.mapper.NewsMapper;
+import com.example.test.mapper.TeamMapper;
+import com.example.test.mapper.UserMapper;
 import com.example.test.service.NewsService;
+import com.example.test.service.TeamService;
+import com.example.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +20,11 @@ public class NewsController {
     NewsService newsService;
     @Autowired
     NewsMapper newsMapper;
+    @Autowired
+    UserService userService;
+    @Autowired
+    TeamService teamService;
+
 
     @PostMapping("/news/getNews")
     public List<News> getNews(@RequestBody Integer UserID){
@@ -45,5 +51,15 @@ public class NewsController {
         else{
             return new CommonResult(200,"success",null);
         }
+    }
+
+    @PostMapping("/news/apply/{TeamID}")
+    public CommonResult applyNews(@PathVariable("TeamID")Integer TeamID,@RequestBody Integer UserID){
+        News news=new News();
+        news.setUserID(teamService.getTeamById(TeamID).getUserID());
+        news.setContent(userService.getUserById(UserID).getUserName());
+        news.setType(1);
+        News result=newsMapper.CreateNews(news);
+        return new CommonResult(200,null,result);
     }
 }
