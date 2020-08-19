@@ -31,4 +31,7 @@ public interface MemberMapper {
     //删除成员
     @Delete("delete from Member where UserID=#{UserID} and TeamID=#{TeamID}")
     public int deleteByTeamAndUser(Integer TeamID,Integer UserID);
+
+    @Delete("delete from Member where TeamID=#{TeamID}")
+    public int deleteByTeam(Integer TeamID);
 }
