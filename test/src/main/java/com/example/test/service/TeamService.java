@@ -30,9 +30,11 @@ public class TeamService{
         Integer UserID = team.getUserID();
         User user = userMapper.getUserById(UserID);;
         if(UserID != null && user == null){
+            System.out.println("in");
             return null;
         }
         teamMapper.insertTeam(team);
+        System.out.println(teamMapper.getTeamById(team.getTeamID()).toString());
         return teamMapper.getTeamById(team.getTeamID());
     }
 
@@ -81,13 +83,10 @@ public class TeamService{
         return 0;
     }
 
-    public int updateInfo(Team team,Integer userID){
-        Team team1 = teamMapper.getTeamById(team.getTeamID());
-        if(team1.getUserID() == userID){
+    public int updateInfo(Team team){
+
             teamMapper.updateInf(team);
             return 1;
-        }
-        return 0;
     }
 
     public Team getTeamById(Integer id){
@@ -103,11 +102,22 @@ public class TeamService{
     }
 
     public List<Team> getTeamByUser(Integer UserID){
+        List<Team> teams1 = teamMapper.getTeamByUser(UserID);
         List<Team> teams = new ArrayList<Team>();
         List<Member> members = memberMapper.getMemberByUser(UserID);
-        if(members == null || members.size() == 0){
-            return null;
+        if(members!= null && members.size() != 0){
+            for(Member member : members){
+                Integer TeamID = member.getTeamID();
+                Team team = teamMapper.getTeamById(TeamID);
+                teams.add(team);
+            }
+            if(teams != null && teams.size() > 0) {
+                for (Team team : teams) {
+                    teams1.add(team);
+                }
+            }
         }
+<<<<<<< HEAD
         for(Member member : members){
             Integer TeamID = member.getTeamID();
             Team team = teamMapper.getTeamById(TeamID);
@@ -122,6 +132,12 @@ public class TeamService{
         }
 
         return teams;
+=======
+        return teams1;
+>>>>>>> a984804677a998d0f9904fad82e9c41c0b206f1e
     }
 
+    public List<Member> getMemberByTeam(Integer TeamID){
+        return memberMapper.getMemberByTeam(TeamID);
+    }
 }

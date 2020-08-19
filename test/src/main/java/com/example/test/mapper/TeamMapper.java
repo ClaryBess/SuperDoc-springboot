@@ -48,5 +48,4 @@ public interface TeamMapper {
     //根据名称查找团队
     @Select("select * from Team where TeamName=#{name}")
     public Team getTeamByName(String name);
-
 }

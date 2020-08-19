@@ -7,6 +7,7 @@ import com.example.test.service.DocService;
 import com.example.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,7 +92,7 @@ public class UserController {
         System.out.println("R2:User="+user.toString());
         userService.updateBir(user);
         userService.updateGen(user);
-       // userMapper.updatePro(user);
+        userMapper.updatePro(user);
         user=userService.getUserById(user.getUserID());
         return new CommonResult(200,null,user);
     }
@@ -110,10 +111,10 @@ public class UserController {
      */
     @RequestMapping("user/save")
     public Map<String, Object> materialPictureAndText(HttpServletRequest request,
-                                                      @RequestParam(value = "imgTitle", required = false) String imgTitle,
+
                                                       @RequestParam(value = "file", required = false) MultipartFile file) {
 
-        if (file.isEmpty()) {
+        if (StringUtils.isEmpty(file)) {
             HashMap<String, Object> resultMap = new HashMap<>();
             resultMap.put("msg", "请上传图片");
             return resultMap;
