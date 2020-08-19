@@ -1,7 +1,6 @@
 package com.example.test.controller;
 
-import com.example.test.bean.CommonResult;
-import com.example.test.bean.News;
+import com.example.test.bean.*;
 import com.example.test.mapper.NewsMapper;
 import com.example.test.mapper.TeamMapper;
 import com.example.test.mapper.UserMapper;
@@ -57,9 +56,24 @@ public class NewsController {
     public CommonResult applyNews(@PathVariable("TeamID")Integer TeamID,@RequestBody Integer UserID){
         News news=new News();
         news.setUserID(teamService.getTeamById(TeamID).getUserID());
-        news.setContent(userService.getUserById(UserID).getUserName());
+        news.setContent(userService.getUserById(UserID).getUserName()+"申请加入团队："+teamService.getTeamById(TeamID).getTeamName());
         news.setType(1);
         int result=newsMapper.CreateNews(news);
         return new CommonResult(200,null,result);
+    }
+
+    @PostMapping("/news/admitApply")
+    public CommonResult admitApply(@RequestBody String content){
+        String str[]=content.split("申请加入团队：");
+        User user=userService.getUserByName(str[0]);
+        Team team=teamService.getTeamByName(str[1]);
+        Member member=new Member();
+        member.setTeamID(team.getTeamID());
+        member.setUserID(user.getUserID());
+        if (member.getUserID() == teamService.getTeamById(member.getTeamID()).getUserID()) {
+            return new CommonResult(500, "Leader can't be added as a member!", null);
+        }
+        Member result = teamService.insertMember(member);
+        return new CommonResult(200, null, result);
     }
 }

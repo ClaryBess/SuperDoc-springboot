@@ -55,7 +55,7 @@ public class TeamController {
             return null;
         List<TeamShow> teamShows = new ArrayList<>();
         for (Team team : teams) {
-            teamShows.add(new TeamShow(team.getTeamID(), UserID, team.getTeamName(), userService.getUserById(UserID).getUserName()));
+            teamShows.add(new TeamShow(team.getTeamID(), team.getUserID(), team.getTeamName(), userService.getUserById(team.getUserID()).getUserName()));
         }
         return teamShows;
     }
