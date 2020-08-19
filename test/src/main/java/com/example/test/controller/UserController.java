@@ -102,7 +102,7 @@ public class UserController {
         userService.updateUserPwd(user);
         userService.updateBir(user);
         userService.updateGen(user);
-        // userMapper.updatePro(user);
+        userMapper.updatePro(user);
         user=userService.getUserById(user.getUserID());
         return new CommonResult(200,null,user);
     }
