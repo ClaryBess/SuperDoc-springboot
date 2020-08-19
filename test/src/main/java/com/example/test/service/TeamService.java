@@ -117,24 +117,8 @@ public class TeamService{
                 }
             }
         }
-<<<<<<< HEAD
-        for(Member member : members){
-            Integer TeamID = member.getTeamID();
-            Team team = teamMapper.getTeamById(TeamID);
-            teams.add(team);
-        }
 
-        List<Team> teams1 = teamMapper.getTeamByUser(UserID);
-        if(teams1 != null && teams1.size() > 0){
-            for(Team team : teams1){
-                teams.add(team);
-            }
-        }
-
-        return teams;
-=======
         return teams1;
->>>>>>> a984804677a998d0f9904fad82e9c41c0b206f1e
     }
 
     public List<Member> getMemberByTeam(Integer TeamID){

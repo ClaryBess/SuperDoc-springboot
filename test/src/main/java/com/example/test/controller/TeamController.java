@@ -2,6 +2,7 @@ package com.example.test.controller;
 
 import com.example.test.bean.*;
 import com.example.test.service.DocService;
+import com.example.test.service.MemberService;
 import com.example.test.service.TeamService;
 import com.example.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class TeamController {
     TeamService teamService;
     @Autowired
     UserService userService;
+    @Autowired
+    MemberService memberService;
     @Autowired
     DocService docService;
 
@@ -60,8 +63,18 @@ public class TeamController {
 
     @PostMapping("/team/delete/{TeamID}")
     public CommonResult delete(@PathVariable("TeamID") Integer TeamID) {
-        teamService.deleteTeam(TeamID);
-        return new CommonResult(200, null, null);
+        Team team = teamService.getTeamById(TeamID);
+        if(team == null){
+            return new CommonResult(500,"cannot find the team!",null);
+        }
+        memberService.deleteMemberByTeam(TeamID);
+        int flag = teamService.deleteTeam(TeamID);
+        if(flag == 0){
+            return new CommonResult(400,"failure!",null);
+        }
+        else{
+            return new CommonResult(200,"success!",null);
+        }
     }
 
     @PostMapping("/team/updateInfo/{TeamID}")
