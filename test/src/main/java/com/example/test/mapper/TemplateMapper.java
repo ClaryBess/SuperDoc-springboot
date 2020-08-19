@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 public interface TemplateMapper {
     //创建模板
     @Options(useGeneratedKeys = true,keyProperty = "TemplateID")
-    @Insert("insert into News(TemplateID,TemplateName,Content,Picture) values(#{TemplateID},#{TemplateName},#{Content},#{Picture})")
+    @Insert("insert into Template(TemplateID,TemplateName,Content,Picture) values(#{TemplateID},#{TemplateName},#{Content},#{Picture})")
     Template CreateNews(Template template);
 
     //根据TemplateID查看消息
-    @Select("select * from News where TemplateID=#{TemplateID}")
+    @Select("select * from Template where TemplateID=#{TemplateID}")
     Template getTemplateByTemplateID(Integer TemplateID);
 }
