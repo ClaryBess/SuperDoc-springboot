@@ -12,8 +12,8 @@ public interface NewsMapper {
 
     //创建消息
     @Options(useGeneratedKeys = true,keyProperty = "NewsID")
-    @Insert("insert into News(NewsID,UserID,DateTime,Type,Content) values(#{NewsID},#{UserID},#{DateTime},#{Type},#{Content})")
-    News CreateNews(News news);
+    @Insert("insert into News(NewsID,UserID,Type,Content) values(#{NewsID},#{UserID},#{Type},#{Content})")
+    int CreateNews(News news);
 
     //发送系统消息
     News SendNews(News news);

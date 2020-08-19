@@ -84,6 +84,7 @@ public class TeamController {
 
     @PostMapping("/team/updateInfo/{TeamID}")
     public CommonResult updateInfo(@PathVariable("TeamID") Integer TeamID, @RequestBody String TeamInfo) {
+        System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
         Team team=teamService.getTeamById(TeamID);
         team.setTeamInfo(TeamInfo);
         teamService.updateInfo(team);
