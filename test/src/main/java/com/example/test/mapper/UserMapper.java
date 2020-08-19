@@ -4,7 +4,7 @@ import com.example.test.bean.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
-@Component
+
 @Mapper
 public interface UserMapper {
 

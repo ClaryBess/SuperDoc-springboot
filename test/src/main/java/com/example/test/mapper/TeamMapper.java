@@ -2,8 +2,10 @@ package com.example.test.mapper;
 
 import com.example.test.bean.Team;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 
 @Mapper
 public interface TeamMapper {

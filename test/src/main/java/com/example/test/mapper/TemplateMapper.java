@@ -2,9 +2,13 @@ package com.example.test.mapper;
 
 import com.example.test.bean.Template;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
+
+@Mapper
 public interface TemplateMapper {
     //创建模板
     @Options(useGeneratedKeys = true,keyProperty = "TemplateID")

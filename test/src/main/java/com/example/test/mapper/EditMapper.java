@@ -2,9 +2,11 @@ package com.example.test.mapper;
 
 import com.example.test.bean.Edit;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Mapper
 public interface EditMapper {
 
     @Options(useGeneratedKeys = true,keyProperty = "EditID")
