@@ -14,16 +14,14 @@ public class SourceConfiguration extends WebMvcConfigurerAdapter {
     String UPLOADFILE_PATH;
       @Override
       public void addResourceHandlers(ResourceHandlerRegistry registry) {
-     /**
-     * @Description: 对文件的路径进行配置,创建一个虚拟路径/file/** ，即只要在<img src="/file/images/20180522/9aa64b2b-a558-421e-929c-537ff0aecdba.jpg" />便可以直接引用图片
-     *这是图片的物理路径 "file:/+本地图片的地址"
-     * @Date： Create in 14:08 2017/12/20
-     * 
-     */
-
-
-        registry.addResourceHandler("/file/**").addResourceLocations("file:"+UPLOADFILE_PATH);
-        System.out.println("文件上传目录："+UPLOADFILE_PATH);
-        super.addResourceHandlers(registry);
+          String os = System.getProperty("os.name");
+          if(os.toLowerCase().startsWith("win")){
+              registry.addResourceHandler("/file/**").addResourceLocations("file:"+UPLOADFILE_PATH);
+          }
+          else{
+              registry.addResourceHandler("/file/**").addResourceLocations("file:/home/ubuntu/images/");
+          }
+          System.out.println("文件上传目录："+UPLOADFILE_PATH);
+          super.addResourceHandlers(registry);
       }
     }

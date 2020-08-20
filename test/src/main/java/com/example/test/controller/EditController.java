@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 public class EditController {
     @Value("${UPLOADFILE_PATH}")
-   static String UPLOADFILE_PATH;
+    static String UPLOADFILE_PATH;
     @Autowired
     EditService editService;
     @Autowired
@@ -70,7 +70,7 @@ public class EditController {
         String fileName = file.getOriginalFilename();  //获取文件名
         //Ueditor的config.json规定的返回路径格式
         String returnPath = "/file/"+fileName;
-        File saveFile = new File("D:/Java/uploadFiles/"+new Date().getTime()+"/"+fileName);
+        File saveFile = new File("${UPLOADFILE_PATH}"+new Date().getTime()+"/"+fileName);
         System.out.println(saveFile.getPath());
         if (!saveFile.exists()){
             saveFile.mkdirs();
