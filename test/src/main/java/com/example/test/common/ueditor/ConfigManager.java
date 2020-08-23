@@ -40,8 +40,7 @@ public final class ConfigManager {
 
 		this.rootPath = rootPath;
 		this.contextPath = contextPath;
-//		this.originalPath = "D:/祖泊宁/软件工程/小学期/SuperDoc-springboot/SuperDoc-springboot/test/src/main/resources/config.json";
-		this.originalPath = "/home/ubuntu/config.json";
+		this.originalPath = "/opt/project/vue/static/UEditor/jsp/config.json";
 		this.initEnv();
 
 	}

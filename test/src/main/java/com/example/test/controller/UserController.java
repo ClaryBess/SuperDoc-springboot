@@ -22,9 +22,11 @@ import java.util.UUID;
 
 @RestController
 public class UserController {
-    //注解自动获取环境变量，图片上传目录
-    @Value("${UPLOADFILE_PATH}")
-    String UPLOADFILE_PATH;
+
+//    @Value("${UPLOADFILE_PATH}")
+//    String UPLOADFILE_PATH;
+    @Value("${file.upload.path}")
+    private String filePath;
     @Autowired
     UserMapper userMapper;
     @Autowired
@@ -54,23 +56,6 @@ public class UserController {
         System.out.println("R1:User="+user.toString());
         return new CommonResult(200,null,result);
     }
-
-//    @RequestMapping(value="/user/login",method = RequestMethod.POST)
-//    public CommonResult login(@RequestBody User user){
-//        System.out.println("L:User="+user.toString());
-//        User user1=userService.loginIn(user.getUserName(),user.getPassword());
-//        //需要先判断user1 是否为null
-//        System.out.println("L:User="+user.toString());
-//        System.out.println("UserName="+user.getUserName());
-//        System.out.println("Password="+user.getPassword());
-//        System.out.println("Password2="+user1.getPassword());
-//        if(user1!=null){
-//            return new CommonResult(200,"success",user1);
-//        }
-//        else {
-//            return new CommonResult(500,"failure",null);
-//        }
-//    }
 
     @RequestMapping(value="/user/login",method = RequestMethod.POST)
     public CommonResult login(@RequestBody User user){
@@ -106,9 +91,33 @@ public class UserController {
         user=userService.getUserById(user.getUserID());
         return new CommonResult(200,null,user);
     }
-    /**
-     * 保存 图片
-     */
+
+    @RequestMapping("user/save")
+    public Map<String, Object> materialPictureAndText(HttpServletRequest request,@RequestParam(value="file", required=false) MultipartFile file){
+        if (StringUtils.isEmpty(file)) {
+            HashMap<String, Object> resultMap = new HashMap<>();
+            resultMap.put("msg", "请上传图片");
+            return resultMap;
+        }
+
+        String filename = file.getOriginalFilename();
+        String path = filePath+"images/";
+        File filepath = new File(path,filename);
+        if(!filepath.getParentFile().exists()) {
+            filepath.getParentFile().mkdirs();
+        }
+        try {
+            file.transferTo(new File(path + File.separator + filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HashMap map = new HashMap();
+        map.put("picture_url","/file/"+filename);
+        return map;
+    }
+
+    /*
     @RequestMapping("user/save")
     public Map<String, Object> materialPictureAndText(HttpServletRequest request,
 
@@ -138,6 +147,7 @@ public class UserController {
             return map;//这里就是上传图片返回的信息，成功失败异常等，前端根据字段接收就是了
         }
     }
+    */
 
     @PostMapping("/user/getUser")
     public User getUser(@RequestBody Integer UserID){

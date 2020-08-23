@@ -21,8 +21,10 @@ import java.util.List;
 
 @RestController
 public class EditController {
-    @Value("${UPLOADFILE_PATH}")
-    static String UPLOADFILE_PATH;
+//    @Value("${UPLOADFILE_PATH}")
+//   static String UPLOADFILE_PATH;
+    @Value("${file.upload.path}")
+    private static String filePath;
     @Autowired
     EditService editService;
     @Autowired
@@ -32,10 +34,7 @@ public class EditController {
     public List<Edit> getEditByUser(@PathVariable("UserID") Integer UserID){
         return editService.getEditByUser(UserID);
     }
-    /**
-     * 上传配置：即不走config.json，模拟config.json里的内容，解决后端配置项不正确，无法上传的问题
-     * @return
-     */
+
     @RequestMapping("/ueditor/configs")
     public String uploadConfig(String action, MultipartFile upfile) {
         System.out.println(action);
@@ -48,7 +47,7 @@ public class EditController {
                     "                \"imageCompressEnable\": true, \n" +
                     "                \"imageCompressBorder\": 1600, \n" +
                     "                \"imageInsertAlign\": \"none\", \n" +
-                    "                \"imageUrlPrefix\": \"http://localhost:8081\",\n" +
+                    "                \"imageUrlPrefix\": \"http://175.24.74.107:8080\",\n" +
                     "                \"imagePathFormat\": \"/file/{rand:6}\" }";
             return s;
         }else if (action.equals("uploadimage")){
@@ -64,26 +63,50 @@ public class EditController {
      return null;
     }
 
-    public static UEditorFile uploadImage(MultipartFile file) throws IOException {
-         String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+    //两件事：上传图片，返回链接
+    public static UEditorFile uploadImage(MultipartFile file) throws IOException{
+        String filename = file.getOriginalFilename();
+        String path = filePath+"images/";
+        File filepath = new File(path,filename);
 
-        String fileName = file.getOriginalFilename();  //获取文件名
-        //Ueditor的config.json规定的返回路径格式
-        String returnPath = "/file/"+fileName;
-        File saveFile = new File("${UPLOADFILE_PATH}"+new Date().getTime()+"/"+fileName);
-        System.out.println(saveFile.getPath());
-        if (!saveFile.exists()){
-            saveFile.mkdirs();
+        if(!filepath.getParentFile().exists()) {
+            filepath.getParentFile().mkdirs();
         }
-        file.transferTo(saveFile);  //将临时文件移动到保存路径
+        try {
+            file.transferTo(new File(path + File.separator + filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        String url = "/file/"+filename;
         UEditorFile uEditorFile = new UEditorFile();
         uEditorFile.setState("SUCCESS");
-        uEditorFile.setUrl(returnPath);  //访问URL
-        uEditorFile.setTitle(fileName);
-        uEditorFile.setOriginal(fileName);
+        uEditorFile.setUrl(url);
+        uEditorFile.setTitle(filename);
+        uEditorFile.setOriginal(filename);
         return uEditorFile;
     }
+
+//    public static UEditorFile uploadImage(MultipartFile file) throws IOException {
+//        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+//
+//        String fileName = file.getOriginalFilename();  //获取文件名
+//        //Ueditor的config.json规定的返回路径格式
+//        String returnPath = "/file/"+fileName;
+//        File saveFile = new File("D:/Java/uploadFiles/"+new Date().getTime()+"/"+fileName);
+//        System.out.println(saveFile.getPath());
+//        if (!saveFile.exists()){
+//            saveFile.mkdirs();
+//        }
+//        file.transferTo(saveFile);  //将临时文件移动到保存路径
+//
+//        UEditorFile uEditorFile = new UEditorFile();
+//        uEditorFile.setState("SUCCESS");
+//        uEditorFile.setUrl(returnPath);  //访问URL
+//        uEditorFile.setTitle(fileName);
+//        uEditorFile.setOriginal(fileName);
+//        return uEditorFile;
+//    }
 
 
     @GetMapping("/edit")
